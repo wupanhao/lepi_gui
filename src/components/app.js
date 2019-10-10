@@ -35,41 +35,64 @@ class App extends Component {
         super(props)
 
     }
-    componentDidMount() {
-        console.log('app.js componentDidMount')
-        var ros = new ROSLIB.Ros({
-            url: 'ws://192.168.50.220:9090'
-        });
+    onBtnEvent(message) {
+        // console.log('Received message on ' + listener.name + ': ', message);
+        console.log(message)
+        // listener.unsubscribe();
+        if (message.type == 1) {
+            var e = new KeyboardEvent('keydown', {
+                bubbles: true,
+                cancelable: true,
+                // key: message.value,
+                keyCode: message.value,
+                // code: "KeyQ",
+                // shiftKey: true
+            });
+
+            document.dispatchEvent(e);
+        }
+
+    }
+    conectToRos() {
+        console.log('trying to conect to ros server:')
+
+        try {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.50.220:9090'
+            });
+        } catch (e) {
+            console.log('ros client init error:', e)
+            console.log('trying to reconect after 3 seconds')
+            return this.conectToRos()
+        }
+
         var listener = new ROSLIB.Topic({
             ros: ros,
             name: '/ubiquityrobot/pi_driver_node/button_event',
             messageType: 'pi_driver/ButtonEvent'
         });
-        ros.on('connection', function() {
+
+        ros.on('connection', () => {
             console.log('Connected to websocket server.');
-            listener.subscribe(function(message) {
-                // console.log('Received message on ' + listener.name + ': ', message);
-                console.log(message)
-                // listener.unsubscribe();
-                if (message.type == 1) {
-                    var e = new KeyboardEvent('keydown', {
-                        bubbles: true,
-                        cancelable: true,
-                        // key: message.value,
-                        keyCode: message.value,
-                        // code: "KeyQ",
-                        // shiftKey: true
-                    });
-
-                    document.dispatchEvent(e);
-                }
-
-            });
+            listener.subscribe(this.onBtnEvent);
         });
+
+        ros.on('error', function(error) {
+            console.log('Error connecting to websocket server: ', error);
+        });
+
+        ros.on('close', () => {
+            console.log('Connection to websocket server closed.');
+            this.conectToRos()
+        });
+
         this.ros = ros
         this.listener = listener
     }
-
+    componentDidMount() {
+        console.log('app.js componentDidMount')
+        this.conectToRos()
+    }
     componentWillUnmount() {
         console.log('app.js componentWillUnmount')
         this.listener.unsubscribe();
