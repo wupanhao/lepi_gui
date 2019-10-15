@@ -58,7 +58,7 @@ class App extends Component {
 
         try {
             var ros = new ROSLIB.Ros({
-                url: 'ws://192.168.50.220:9090'
+                url: 'ws://localhost:9090'
             });
         } catch (e) {
             console.log('ros client init error:', e)
