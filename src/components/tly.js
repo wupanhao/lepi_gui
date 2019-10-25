@@ -33,6 +33,9 @@ class CP extends Component {
         const _this = this;
         const divs = $("[name='tly-a']");
         const i = _this.state.l;
+        if (i === -1) {
+            _this.setState({l: 0});
+        }
         if (e && e.keyCode) {
             switch (e.keyCode) {
                 case 13://回车事件
@@ -40,9 +43,9 @@ class CP extends Component {
                     if (links.length > 0 && i != -1) {
                         links[this.state.l].click();
                     }
-                    if (i === -1) {
+                    /*if (i === -1) {
                         _this.setState({l: 0});
-                    }
+                    }*/
                     break;
                 case 37:
                     if (i >= 1 && i - 1 < divs.length) {

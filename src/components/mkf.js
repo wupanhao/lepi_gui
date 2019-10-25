@@ -67,16 +67,16 @@ class MKF extends Component {
         const _this = this;
         if (e && e.keyCode) {
             switch (e.keyCode) {
-                case 32://空格，暂停
+                case 38://'ArrowUp': 38  ，暂停
                     _this.handleClick();
                     break;
-                case 82://字母R，重置
+                case 40://'ArrowDown': 40 ，重置
                     _this.handleReset();
                     break;
-                case 83:
+                case 37: //'ArrowLeft': 37
                     _this.startClick();
                     break;
-                case 69:
+                case 39:// 'ArrowRight': 39
                     _this.endClick();
                     break;
             }

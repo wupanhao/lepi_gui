@@ -2,12 +2,12 @@ import React from 'react';
 import {
     Component
 } from 'react';
-import ly1 from '../public/images/ly1.svg';
-import yy from '../public/images/yy.svg';
-import sy from '../public/images/yl2.svg';
-import zt from '../public/images/zt.svg';
-import czcp from '../public/images/czcp.svg';
-import bbxx from '../public/images/bbxx.svg';
+import ly1 from '../public/images/ly1.png';
+import yy from '../public/images/yy.png';
+import sy from '../public/images/yl2.png';
+import zt from '../public/images/zt.png';
+import czcp from '../public/images/czcp.png';
+import bbxx from '../public/images/bbxx.png';
 import Header from './header';
 import Footer from './foot';
 import {
@@ -37,6 +37,9 @@ class Setting extends Component {
         const _this = this;
         const divs = $('.s-img-l');
         const i = _this.state.s;
+        if(i === -1){
+            _this.setState({s: 0});
+        }
         if (e && e.keyCode) {
             switch (e.keyCode) {
                 case 13: //回车事件
@@ -44,11 +47,11 @@ class Setting extends Component {
                     if (links.length > 0 && i != -1) {
                         links[this.state.s].click();
                     }
-                    if (i === -1) {
+                   /* if (i === -1) {
                         _this.setState({
                             s: 0
                         });
-                    }
+                    }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {

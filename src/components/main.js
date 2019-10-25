@@ -2,10 +2,10 @@ import React from 'react';
 import {
     Component
 } from 'react';
-import cxgl from '../public/images/cxgl.svg';
-import nzcs from '../public/images/nzcs.svg';
-import sjxg from '../public/images/sjxg.svg';
-import xtsz from '../public/images/xtsz.svg';
+import cxgl from '../public/images/cxgl.png';
+import nzcs from '../public/images/nzcs.png';
+import sjxg from '../public/images/sjxg.png';
+import xtsz from '../public/images/xtsz.png';
 import Header from './header';
 import Footer from './foot';
 import {
@@ -38,6 +38,11 @@ class Main extends Component {
         const _this = this;
         const divs = $('.s-main-l');
         const i = _this.state.i;
+        if (i === -1) {
+            _this.setState({
+                i: 0
+            });
+        }
         if (e && e.keyCode) {
             switch (e.keyCode) {
                 case 13: //回车事件
@@ -45,11 +50,11 @@ class Main extends Component {
                     if (links.length > 0 && i != -1) {
                         links[this.state.i].click();
                     }
-                    if (i === -1) {
+                    /*if (i === -1) {
                         _this.setState({
                             i: 0
                         });
-                    }
+                    }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {
@@ -60,7 +65,6 @@ class Main extends Component {
                     break;
                 case 40:
                     if (i >= 0 && i + 2 < divs.length) {
-                        console.log('');
                         _this.setState({
                             i: i + 2
                         });

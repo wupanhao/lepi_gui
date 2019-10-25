@@ -34,10 +34,13 @@ class LY extends Component {
         document.removeEventListener("keydown", this.onLyKeyDown)
     }
     onLyKeyDown = (e) => {
-        console.log('keyCode : ', e.keyCode);
+        // console.log('keyCode : ', e.keyCode);
         const _this = this;
         const divs = $('.ly-down-li');
         const i = _this.state.i;
+        if(i === -1){
+            _this.setState({i: 0});
+        }
         if(e && e.keyCode){
             switch(e.keyCode) {
                 case 13://回车事件
@@ -45,9 +48,9 @@ class LY extends Component {
                     if(links.length > 0 && i != -1){
                         links[this.state.i].click();
                     }
-                    if(i === -1){
+                   /* if(i === -1){
                         _this.setState({i: 0});
-                    }
+                    }*/
                     break;
                 case 38://上
                     if (i - 1 >= 0 && i - 1 < divs.length) {
@@ -59,14 +62,14 @@ class LY extends Component {
                         _this.setState({i: i + 1});
                     }
                     break;
-                case 32://空格
+                case 82:// 'R' 82
                     _this.onClick();
                     break;
                 case 66://B, 返回
-                    console.log('li-back : ', $('#li-back'));
+                    // console.log('li-back : ', $('#li-back'));
                     $('#li-back')[0].click();
                     break;
-                case 67://C， 选择
+                case 67://C， 67
                     $('#ly-check')[0].click();
                     break;
             }

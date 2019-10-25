@@ -30,10 +30,10 @@ class Foot extends Component {
         const _this = this;
         if(e && e.keyCode) {
             switch (e.keyCode) {
-                case 66://字母键B，返回
+                case 66:// 'B' 66，返回
                     _this.goBack();
                     break;
-                case 72://字母键H，主页
+                case 27://'Esc'   对应退出键
                     $('a[name="jslp-home"]')[0].click();
                     break;
             }

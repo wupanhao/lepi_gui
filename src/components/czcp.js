@@ -23,7 +23,7 @@ class CZCP extends Component {
                 case 66: //返回 B
                     $('#czcp-back')[0].click();
                     break;
-                case 78: //确定 n
+                case 67: //确定 C
                     $('#czcp-go')[0].click();
                     break;
             }

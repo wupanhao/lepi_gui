@@ -21,6 +21,7 @@ import LY from './ly';
 import CZCP from './czcp';
 import BBXX from './bbxx';
 import CXGL from './cxgl';
+import PROJECTLIST from './projectList';
 
 import {
     HashRouter,
@@ -123,6 +124,7 @@ class App extends Component {
                         <Route exact path="/czcp" component={CZCP}/>
                         <Route exact path="/bbxx" component={BBXX}/>
                         <Route exact path="/cxgl" component={CXGL}/>
+                        <Route exact path="/projectList" component={PROJECTLIST}/>
                     </Switch>
                 </HashRouter>
             </div>

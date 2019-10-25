@@ -1,10 +1,10 @@
 import React from 'react';
 import {Component} from 'react';
-import cp from '../public/images/cp.svg';
-import ys from '../public/images/ys.svg';
-import tly from '../public/images/tly.svg';
-import csb from '../public/images/csb.svg';
-import hwx from '../public/images/hwx.svg';
+import cp from '../public/images/cp.png';
+import ys from '../public/images/ys.png';
+import tly from '../public/images/tly.png';
+import csb from '../public/images/csb.png';
+import hwx from '../public/images/hwx.png';
 import dy from '../public/images/dy.png';
 import {Link}  from 'react-router-dom';
 import $ from  'jquery';
@@ -32,6 +32,9 @@ class TLY extends Component {
         const _this = this;
         const divs = $('.s-img-l');
         const i = _this.state.i;
+        if(i === -1){
+            _this.setState({i: 0});
+        }
         if(e && e.keyCode){
             switch(e.keyCode) {
                 case 13://回车事件
@@ -39,9 +42,9 @@ class TLY extends Component {
                     if(links.length > 0 && i != -1){
                         links[this.state.i].click();
                     }
-                    if(i === -1){
+                   /* if(i === -1){
                         _this.setState({i: 0});
-                    }
+                    }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {

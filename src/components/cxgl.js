@@ -4,7 +4,9 @@ import file from '../public/images/file.png';
 import Header from './header';
 import Footer from './foot';
 import $ from  'jquery';
-
+import {
+    Link
+} from 'react-router-dom';
 class CXGL extends Component {
     constructor(props) {
         super(props)
@@ -24,17 +26,21 @@ class CXGL extends Component {
     }
 
     listenCxglDiv = (e) => {
-        // console.log('e -- --- : ', e.keyCode);
         const _this = this;
         const divs = $('.cxgl');
         const i = _this.state.m;
+        if (i === -1) {
+            _this.setState({
+                i: 0
+            });
+        }
         if(e && e.keyCode){
 
             switch(e.keyCode) {
                 case 13://回车事件
-                    if(i === -1){
+                   /* if(i === -1){
                         _this.setState({m: 0});
-                    }
+                    }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {
@@ -68,7 +74,7 @@ class CXGL extends Component {
             <div>
                 <Header />
                 <div className="s-body">
-                    <div className={`cxgl ${this.state.m === 0 ? 'active' : ''}`}><img src={file} alt=""/><div>文件1</div></div>
+                    <div className={`cxgl ${this.state.m === 0 ? 'active' : ''}`}><Link to="/projectList"><img src={file} alt=""/><div>我的项目</div></Link></div>
                     <div className={`cxgl ${this.state.m === 1 ? 'active' : ''}`}><img src={file} alt=""/><div>文件2</div></div>
                     <div className={`cxgl ${this.state.m === 2 ? 'active' : ''}`}><img src={file} alt=""/><div>文件3</div></div>
                 </div>

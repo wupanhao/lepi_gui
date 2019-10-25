@@ -2,12 +2,12 @@ import React from 'react';
 import {
     Component
 } from 'react';
-import cgq from '../public/images/cgq.svg';
-import mkf from '../public/images/mkf.svg';
-import sxt from '../public/images/sxt.svg';
-import md from '../public/images/md.svg';
-import dj from '../public/images/dj.svg';
-import cpjz from '../public/images/cpjz.svg';
+import cgq from '../public/images/cgq.png';
+import mkf from '../public/images/mkf.png';
+import sxt from '../public/images/sxt.png';
+import md from '../public/images/md.png';
+import dj from '../public/images/dj.png';
+import cpjz from '../public/images/cpjz.png';
 import {
     Link
 } from 'react-router-dom';
@@ -37,6 +37,11 @@ class Test extends Component {
         const _this = this;
         const divs = $('.s-img-l');
         const i = _this.state.t;
+        if (i === -1) {
+            _this.setState({
+                t: 0
+            });
+        }
         if (e && e.keyCode) {
             switch (e.keyCode) {
                 case 13: //回车事件
@@ -44,11 +49,11 @@ class Test extends Component {
                     if (links.length > 0 && i != -1) {
                         links[this.state.t].click();
                     }
-                    if (i === -1) {
+                    /*if (i === -1) {
                         _this.setState({
                             t: 0
                         });
-                    }
+                    }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {

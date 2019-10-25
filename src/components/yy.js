@@ -28,13 +28,16 @@ class YY extends Component {
         const _this = this;
         const divs = $('.s-lan-l');
         const i = _this.state.a;
+        if (i === -1) {
+            _this.setState({a: 0});
+        }
         if (e && e.keyCode) {
             switch (e.keyCode) {
                 case 13://回车事件
                    //执行选择语言操作
-                    if (i === -1) {
+                    /*if (i === -1) {
                         _this.setState({a: 0});
-                    }
+                    }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {

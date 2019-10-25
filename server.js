@@ -14,12 +14,30 @@ const wifiRouter = require('./router/wifi')
 const exp = express()
 
 const path = require('path');
+
+const mdns = require('multicast-dns')()
+
 exp.use(express.static(path.join(__dirname, '/build')));
 
 const server = createServer(exp);
 const wss = new WebSocket.Server({
   server
 });
+
+mdns.on('query', function(query) {
+  if (query.questions[0] && query.questions[0].name === 'lepi-robot') {
+    console.log('got a query packet:', query)
+
+    mdns.respond({
+      answers: [{
+        name: 'lepi-robot',
+        type: 'A',
+        ttl: 300,
+        data: '192.168.1.5',
+      }],
+    })
+  }
+})
 
 wss.on('connection', function connection(ws, req) {
   const ip = req.connection.remoteAddress;
