@@ -5,7 +5,7 @@ const {
   createServer
 } = require('http');
 
-const WebSocket = require('ws');
+//const WebSocket = require('ws');
 
 const express = require('express')
 
@@ -15,11 +15,14 @@ const exp = express()
 
 const path = require('path');
 
-const mdns = require('multicast-dns')()
+//const mdns = require('multicast-dns')()
 
 exp.use(express.static(path.join(__dirname, '/build')));
 
 const server = createServer(exp);
+
+/*
+
 const wss = new WebSocket.Server({
   server
 });
@@ -55,7 +58,6 @@ wss.on('connection', function connection(ws, req) {
   });
 });
 
-/*
 app.get('/api', function(req, res) {
   // create user in req.body
   // console.log(req.body)
