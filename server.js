@@ -9,6 +9,7 @@ const express = require('express')
 const path = require('path');
 const os = require('os');
 const mdns = require('multicast-dns')()
+const axios = require('axios');
 
 const wifiRouter = require('./router/wifi')
 
@@ -94,6 +95,20 @@ app.use('/wifi', function(req, res, next) {
   next();
 });
 app.use('/wifi', wifiRouter)
+
+app.get('/stream_list', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  axios.get('http://localhost:8080/').then(result => {
+    // console.log(result)
+    // console.log(result.data)
+    if (result && result.data) {
+      res.send(result.data)
+    } else {
+      res.send('error')
+    }
+  })
+})
 
 /*
 

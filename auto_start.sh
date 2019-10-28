@@ -1,6 +1,6 @@
 mkdir -p ~/.config/autostart
-cp ./config/gui.desktop ~/.config/autostart/
-cp ./config/start.sh ~/
+cp ./conf/gui.desktop ~/.config/autostart/
+cp ./conf/start.sh ~/
 sudo npm i -g npm
 sudo mv /usr/bin/npm /usr/bin/npm_old
 # Fix npm EACCES error
