@@ -1,5 +1,5 @@
 from wupanhao/pi3-electron
 WORKDIR /app
-RUN npm i rpi-wifi-connection express body-parser
+RUN npm i rpi-wifi-connection express body-parser multicast-dns
 COPY ./ .
 CMD bash -c "cd /app && electron --no-sandbox ./server.js"
