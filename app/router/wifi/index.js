@@ -14,10 +14,10 @@ const router = express.Router();
 // wpa_cli list_networks -i wlan0
 // wpa_cli remove_network -i wlan0 0
 
-router.use('/', express.static(path.join(__dirname, '../wifi')))
+router.use('/', express.static(__dirname))
 
 router.get('/', (req, res) => {
-	var form = fs.readFileSync(path.join(__dirname, '../wifi/index.html'), {
+	var form = fs.readFileSync(path.join(__dirname, 'index.html'), {
 		encoding: 'utf8'
 	});
 	res.send(form);

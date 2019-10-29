@@ -182,5 +182,7 @@ ipcRenderer.on('loadUrl', (event, arg) => {
   arg && arg.path && runner.loadProjectFromUrl(arg.path)
 })
 
+/*
 ipcRenderer.send('asynchronous-message', 'ping')
 console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
+*/

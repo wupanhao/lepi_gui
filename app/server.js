@@ -14,6 +14,8 @@ const axios = require('axios');
 const wifiRouter = require('./router/wifi')
 const uploadRouter = require('./router/upload')
 
+var scratchWindow = null
+
 function getLocalIps(flagIpv6) {
   var ifaces = os.networkInterfaces();
   // console.log(ifaces)
@@ -86,8 +88,9 @@ wss.on('connection', function connection(ws, req) {
   });
 });
 */
+
 const app = express()
-app.use('/', express.static(path.join(__dirname, '/../build')));
+app.use('/scratch-runner', express.static(path.join(__dirname, 'scratch-runner')));
 const server = createServer(app);
 // app.use('/wifi', express.static(__dirname + '/wifi'));
 app.use('/wifi', function(req, res, next) {
@@ -112,6 +115,25 @@ app.get('/stream_list', (req, res) => {
   })
 })
 
+app.get('/close_scratch_window', (req, res) => {
+  if (scratchWindow != null) {
+    console.log(scratchWindow)
+    scratchWindow.hide()
+    /*
+    const remote = require('electron').remote
+    let w = remote.getCurrentWindow()
+    w.close()
+    */
+  }
+  res.send('ok')
+})
+app.use('/static', express.static(path.join(__dirname, '/../build/static')));
+app.get('/index', (req, res) => {
+  var data = fs.readFileSync(path.join(__dirname, '/../build/index.html'), {
+    encoding: 'utf8'
+  });
+  res.send(data);
+})
 /*
 
 app.get('/streamList', function(req, res) {
@@ -132,9 +154,10 @@ const {
 } = require('electron')
 */
 const electron = require('electron')
+const BrowserWindow = electron.BrowserWindow
 
 function createWindow() {
-  let win = new electron.BrowserWindow({
+  let win = new BrowserWindow({
     width: 240,
     height: 320,
     // autoHideMenuBar: true, //remove menubar but save minimize maxmize controls
@@ -143,12 +166,67 @@ function createWindow() {
       nodeIntegration: true
     }
   })
-  win.loadURL('http://localhost:3000/index.html')
-  // win.loadFile('app.html')
+  // win.loadFile('../build/index.html')
+  // win.loadURL(`file://${__dirname}/scratch-runner/app.html`)
+  win.loadURL('http://localhost:3000/index')
+  console.log(win)
 }
+
+
+function createScratchWindow(file_path = null) {
+  let win = new BrowserWindow({
+    width: 240,
+    height: 320,
+    // autoHideMenuBar: true, //remove menubar but save minimize maxmize controls
+    frame: false, //remove menubar and control
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+  // win.loadFile('app.html')
+  if (file_path) {
+    // win.loadURL(`http://localhost:3000/scratch-runner/app.html?path=${file_path}`)
+    win.loadURL(`file://${__dirname}/scratch-runner/app.html?path=${file_path}`)
+  } else {
+    // win.loadURL(`http://localhost:3000/scratch-runner/app.html`)
+    win.loadURL(`file://${__dirname}/scratch-runner/app.html`)
+  }
+  scratchWindow = win
+  // win.loadURL('http://localhost:8073/playground/index.html')
+}
+
+const fs = require('fs');
+const platform = os.platform()
+var temp_dir = os.tmpdir()
+var save_dir = '~/Programs'
+
+if (platform === 'win32') {
+  save_dir = path.join(__dirname, '/router/upload/temp')
+}
+
+if (!fs.existsSync(save_dir)) {
+  fs.mkdirSync(save_dir);
+}
+
+fs.watch(save_dir, (event, filename) => {
+  var file_path = path.join(save_dir, filename)
+  console.log(filename, event, fs.existsSync(file_path))
+  if (event == 'rename' && fs.existsSync(file_path)) {
+    if (scratchWindow != null) {
+      scratchWindow.show()
+      scratchWindow.webContents.send('loadFile', {
+        path: file_path
+      });
+    } else {
+      createScratchWindow(file_path)
+    }
+  }
+});
+
 electron.app.on('ready', () => {
-  server.listen(3000, function() {
+  server.listen(3000, () => {
     console.log('Listening on http://localhost:3000');
     createWindow()
+    // createScratchWindow()
   });
 })
