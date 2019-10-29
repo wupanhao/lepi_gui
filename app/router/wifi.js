@@ -32,7 +32,7 @@ router.post('/connect', jsonParser, function(req, res) {
 	const request = req.body
 	request.timeout = 20000
 	console.log(req.body)
-	if (request.ssid && request.psk) {
+	if (request && request.ssid) {
 		wifi.connect(request).then(() => {
 			wifi.getStatus().then(info => {
 				// console.log(status)

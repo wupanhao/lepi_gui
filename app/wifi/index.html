@@ -96,7 +96,11 @@ function ajaxPost ( url , data,fnSucceed , fnFail , fnLoading ) {
         ajaxGet(url, {}, function(str){
             var str = JSON.parse(str);
            // console.log('str : ', str);
+            if( str && str.ip_address )
             document.getElementById('showMsg').innerHTML = '<span style="color: green">wifi已连接，IP为：'+str.ip_address+'</span>'
+            else
+            document.getElementById('showMsg').innerHTML = '<span style="color: red">wifi未连接！</span>'
+
         }, function(err){
             document.getElementById('showMsg').innerHTML = '<span style="color: red">wifi未连接！</span>'
         }, function(msg){

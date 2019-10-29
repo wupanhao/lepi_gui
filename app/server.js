@@ -86,7 +86,7 @@ wss.on('connection', function connection(ws, req) {
 });
 */
 const app = express()
-app.use('/', express.static(path.join(__dirname, '/build')));
+app.use('/', express.static(path.join(__dirname, '/../build')));
 const server = createServer(app);
 // app.use('/wifi', express.static(__dirname + '/wifi'));
 app.use('/wifi', function(req, res, next) {
