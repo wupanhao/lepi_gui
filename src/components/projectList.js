@@ -4,7 +4,7 @@ import Header from './header';
 import Footer from './foot';
 import {Link}  from 'react-router-dom';
 import $ from  'jquery';
-import file from '../public/images/file.png';
+import file from '../public/images/p.png';
 
 class ProjectList extends Component {
     constructor(props) {
@@ -72,8 +72,13 @@ class ProjectList extends Component {
             switch(e.keyCode) {
                 case 13: //回车事件
                     const links = $('a[name="pl-a"]');
-                    if (links.length > 0 && i != -1) {
-                        links[this.state.i].click();
+                    if (_this.state.i <= links.length && links.length > 0 && i != -1) {
+                        links[_this.state.i].click();
+                    }
+                    if(_this.state.i > links.length || _this.state.i < 0){
+                        _this.setState({
+                            i: 0
+                        });
                     }
                     /*if (i === -1) {
                      _this.setState({

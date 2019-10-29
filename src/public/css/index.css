@@ -55,30 +55,42 @@ html body a:link{text-decoration:none; cursor:pointer; color:#ffffff;}
   margin-left: 28px;
 }
 .active {
-   background: #22414c;
-   border-radius: 10px;
- }
+  background: #22414c;
+  border-radius: 10px;
+}
 .s-img-l img {
   width: 55px;
   height: 55px;
   border-radius: 14px;
   position:absolute;
 }
+.s-img-l div {
+  width: 55px;
+  font-size: 13px;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 58px;
+}
 .pl-img-l {
-  float: left;
+ /* float: left;
   width: 20%;
+  height: 50px;
+  padding: 10px 10px 5px 10px;
+  margin-left:35px;*/
+  float: left;
+  width: 28%;
   height: 60px;
-  padding: 0px 12px 5px 16px;
-  margin-left: 28px;
+  margin-left: 35px;
+  margin-bottom: 5px;
 }
 .pl-img-l img {
-  width: 45px;
-  height: 45px;
-  border-radius: 14px;
+  width: 30px;
+  height: 38px;
+  border-radius: 5px;
   position:absolute;
+  margin: 5px 10px 5px 18px;
 }
 .pl-img-l div {
-  width: 45px;
   font-size: 13px;
   color: #ffffff;
   text-align: center;
