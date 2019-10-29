@@ -94,7 +94,7 @@ class Main extends Component {
                 <Header />
                 <div className="s-body" id="main">
                     <div className={`s-main-l ${this.state.i === 0 ? 'active' : ''}`} name="main">
-                        <Link to="/cxgl" name="main-a"><img src={cxgl} alt=""/>
+                        <Link to="/projectList" name="main-a"><img src={cxgl} alt=""/>
                             <div>程序管理</div>
                         </Link>
                     </div>
