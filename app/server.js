@@ -1,6 +1,6 @@
 'use strict';
 
-const debuglog = require('util').debuglog('lepi_server')
+const debuglog = require('util').debuglog('lepi_gui')
 const {
   createServer
 } = require('http');
@@ -12,6 +12,7 @@ const mdns = require('multicast-dns')()
 const axios = require('axios');
 
 const wifiRouter = require('./router/wifi')
+const uploadRouter = require('./router/upload')
 
 function getLocalIps(flagIpv6) {
   var ifaces = os.networkInterfaces();
@@ -95,6 +96,7 @@ app.use('/wifi', function(req, res, next) {
   next();
 });
 app.use('/wifi', wifiRouter)
+app.use('/upload', uploadRouter)
 
 app.get('/stream_list', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -124,9 +126,6 @@ app.all('/api', function(req, res, next) {
   next();
 });
 
-
-
-
 const {
   app,
   BrowserWindow,
@@ -147,8 +146,9 @@ function createWindow() {
   win.loadURL('http://localhost:3000/index.html')
   // win.loadFile('app.html')
 }
-
-server.listen(3000, function() {
-  console.log('Listening on http://localhost:3000');
-  electron.app.on('ready', createWindow)
-});
+electron.app.on('ready', () => {
+  server.listen(3000, function() {
+    console.log('Listening on http://localhost:3000');
+    createWindow()
+  });
+})
