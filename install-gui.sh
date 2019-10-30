@@ -4,4 +4,4 @@ sudo mv /usr/bin/npm /usr/bin/npm_old
 mkdir ~/.npm-global
 /usr/local/bin/npm config set prefix '~/.npm-global'
 echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
-/usr/local/bin/npm i -g electron@6.0.0
+~/.npm-global/bin/npm i -g electron@6.0.0

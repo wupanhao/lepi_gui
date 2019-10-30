@@ -16,7 +16,7 @@ ipcMain.on('synchronous-message', (event, arg) => {
 })
 */
 
-var mainWindow = null
+var scratchWindow = null
 
 function createScratchWindow(file_path = null) {
   let win = new BrowserWindow({
@@ -34,7 +34,7 @@ function createScratchWindow(file_path = null) {
   } else {
     win.loadURL(`file://${__dirname}/app.html`)
   }
-  mainWindow = win
+  scratchWindow = win
   // win.loadURL('http://localhost:8073/playground/index.html')
 }
 
@@ -43,8 +43,8 @@ const path = require('path')
 const os = require('os')
 const platform = os.platform()
 var temp_dir = os.tmpdir()
-var save_dir = '~/Programs'
-
+var save_dir = '/home/pi/Programs'
+var active = true
 if (platform === 'win32') {
   save_dir = path.join(__dirname, 'temp')
 }
@@ -56,14 +56,23 @@ if (!fs.existsSync(save_dir)) {
 fs.watch(save_dir, (event, filename) => {
   var file_path = path.join(save_dir, filename)
   console.log(filename, event, fs.existsSync(file_path))
-  if (event == 'rename' && fs.existsSync(file_path)) {
-    if (mainWindow != null) {
-      mainWindow.webContents.send('loadFile', {
+  if (active == true && event == 'rename' ) {
+
+    setTimeout(() => {
+      if(fs.existsSync(file_path)){
+    active = false
+    setTimeout(() => {active = true },1000)        
+    if (scratchWindow != null) {
+      scratchWindow.webContents.send('loadFile', {
         path: file_path
       });
     } else {
-      createScratchWindow()
+      createScratchWindow(file_path)
     }
+      }
+
+    }, 200)
+
   }
 });
 

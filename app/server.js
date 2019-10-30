@@ -43,6 +43,7 @@ mdns.on('query', query => {
     console.log('got a query packet:', query)
     var ips = getLocalIps()
     if (ips.length > 0) {
+    console.log(ips)
       mdns.respond({
         answers: ips.map(ip => {
           return {
@@ -198,8 +199,8 @@ function createScratchWindow(file_path = null) {
 const fs = require('fs');
 const platform = os.platform()
 var temp_dir = os.tmpdir()
-var save_dir = '~/Programs'
-
+var save_dir = '/home/pi/Programs'
+var active = true
 if (platform === 'win32') {
   save_dir = path.join(__dirname, '/router/upload/temp')
 }
@@ -211,15 +212,23 @@ if (!fs.existsSync(save_dir)) {
 fs.watch(save_dir, (event, filename) => {
   var file_path = path.join(save_dir, filename)
   console.log(filename, event, fs.existsSync(file_path))
-  if (event == 'rename' && fs.existsSync(file_path)) {
+  if (active == true && event == 'rename' ) {
+
+    setTimeout(() => {
+      if(fs.existsSync(file_path)){
+    active = false
+    setTimeout(() => {active = true },1000)        
     if (scratchWindow != null) {
-      scratchWindow.show()
       scratchWindow.webContents.send('loadFile', {
         path: file_path
       });
     } else {
       createScratchWindow(file_path)
     }
+      }
+
+    }, 200)
+
   }
 });
 

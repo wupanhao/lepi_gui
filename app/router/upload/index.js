@@ -15,7 +15,7 @@ const multer = require('multer')
 const os = require('os')
 const platform = os.platform()
 // const temp_dir = os.tmpdir()
-var save_dir = '~/Programs'
+var save_dir = '/home/pi/Programs'
 
 if (platform === 'win32') {
 	save_dir = path.join(__dirname, 'temp')

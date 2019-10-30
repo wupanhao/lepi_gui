@@ -92,7 +92,7 @@ class Runner {
         isDown: true
       });
       */
-      e.preventDefault();
+      // e.preventDefault();
     });
     document.addEventListener('keyup', e => {
       // Always capture up events,
@@ -109,18 +109,17 @@ class Runner {
       */
       // E.g., prevent scroll.
       if (e.target !== document && e.target !== document.body) {
-        e.preventDefault();
+        // e.preventDefault();
       }
     });
 
     vm.start()
   }
   loadProjectFromFile(path) {
-    setTimeout(() => {
       var buffer = fs.readFileSync(path);
       console.log(buffer)
       this.vm.loadProject(buffer)
-    }, 200)
+
     /*
     fs.readFile(path, (err, buffer) => {
       if (err) {
