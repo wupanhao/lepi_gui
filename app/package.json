@@ -2,10 +2,10 @@
   "name": "app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "author": "Panhao Wu",
   "license": "ISC",
@@ -15,6 +15,8 @@
     "express": "^4.17.1",
     "multer": "^1.4.2",
     "multicast-dns": "^7.2.0",
-    "rpi-wifi-connection": "^1.0.14"
+    "recursive-readdir": "^2.2.2",
+    "rpi-wifi-connection": "^1.0.14",
+    "scratch-audio": "^0.1.0-prerelease.20190925183642"
   }
 }
