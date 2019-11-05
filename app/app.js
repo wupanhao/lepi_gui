@@ -50,8 +50,8 @@ function onBtnEvent(message) {
 }
 
 const RosClient = require('./router/ros')
-const ros = new RosClient(env.ros_base_url)
-ros.conectToRos(onBtnEvent)
+const ros = new RosClient(env.ros_base_url,onBtnEvent)
+ros.conectToRos()
 
 app.get('/hide_scratch_window', (req, res) => {
   hideScratchWindow()

@@ -179,13 +179,18 @@ function getUrlParam(name) {
   return (false);
 }
 
-// console.log(getUrlParam('path'))
 
 const runner = new Runner()
 // runner.loadProjectFromFile("./2.sb3")
 // runner.loadProjectFromUrl('http://localhost:3000/program/2.sb3')
+console.log(getUrlParam('path'))
+var path = ""
+try {
+  path = decodeURI(getUrlParam('path'));
+} catch (e) {
+  console.error(e);
+}
 
-const path = getUrlParam('path')
 if (fs.existsSync(path)) {
   runner.loadProjectFromFile(path)
 }

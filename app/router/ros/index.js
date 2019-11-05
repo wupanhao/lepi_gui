@@ -1,13 +1,14 @@
 const ROSLIB = require('roslib');
 
 class ros_client {
-  constructor(ros_base_url) {
+  constructor(ros_base_url,btnHandler) {
     this.url = ros_base_url
     this.listener = null
+    this.btnHandler = btnHandler
     // this.conectToRos()
   }
 
-  conectToRos(btnHandler) {
+  conectToRos() {
     console.log('trying to conect to ros server:')
     try {
       var ros = new ROSLIB.Ros({
@@ -33,8 +34,8 @@ class ros_client {
 
     ros.on('connection', () => {
       console.log('Connected to websocket server.');
-      if (btnHandler) {
-        listener.subscribe(btnHandler);
+      if (this.btnHandler) {
+        listener.subscribe(this.btnHandler);
       }
     });
 
