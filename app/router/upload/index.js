@@ -6,7 +6,7 @@ const multer = require('multer')
 const os = require('os')
 
 const {
-	watchFile
+	runScratch
 } = require('../scratch-runner/index')
 
 const wifi = new Wifi();
@@ -24,7 +24,7 @@ if (!fs.existsSync(temp_dir)) {
 	fs.mkdirSync(temp_dir);
 }
 
-watchFile(temp_dir)
+// watchFile(temp_dir)
 
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
@@ -32,7 +32,8 @@ const storage = multer.diskStorage({
 	},
 	filename: function(req, file, cb) {
 		// console.log(file)
-		cb(null, Date.now() + '-' + file.originalname)
+		cb(null, file.originalname)
+		// cb(null, Date.now() + '-' + file.originalname)
 	}
 })
 
@@ -47,6 +48,7 @@ router.post('/', upload.single('upload_file'), function(req, res, next) {
 	res.send({
 		ret_code: '0'
 	});
+	runScratch(file.path)
 	// mainWindow.webContents.send('loadFile', {
 	//   path: file.path
 	// });

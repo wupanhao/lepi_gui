@@ -1,6 +1,7 @@
-'use strict';
+// 'use strict';
 
-const debuglog = require('util').debuglog('lepi_gui')
+// const debuglog = require('util').debuglog('lepi_gui')
+const debuglog = console.log
 const {
   createServer
 } = require('http');
@@ -10,12 +11,17 @@ const os = require('os');
 const ROSLIB = require('roslib');
 
 const mdns = require('./router/mdns')
+
+const env = require('../env')
+
 var {
   runScratch,
   hideScratchWindow,
   closeScratchWindow
 } = require('./router/scratch-runner/index')
 const app = require('./server')
+
+var mainWindow = null
 
 function onBtnEvent(message) {
   // console.log('Received message on ' + listener.name + ': ', message);
@@ -31,55 +37,25 @@ function onBtnEvent(message) {
       // shiftKey: true
     });
     // document.dispatchEvent(e);
+    if (mainWindow != null && mainWindow.focused) {
+      mainWindow.webContents.send('key-event', e);
+    }
   }
 }
 
 
-function conectToRos() {
-  console.log('trying to conect to ros server:')
-  this.conectToRos()
-  this.listener.unsubscribe();
-  try {
-    var ros = new ROSLIB.Ros({
-      url: 'ws://localhost:9090'
-    });
-  } catch (e) {
-    console.log('ros client init error:', e)
-    console.log('trying to reconect after 3 seconds')
-    return this.conectToRos()
-  }
-
-  var listener = new ROSLIB.Topic({
-    ros: ros,
-    name: '/ubiquityrobot/pi_driver_node/button_event',
-    messageType: 'pi_driver/ButtonEvent'
-  });
-
-  ros.on('connection', () => {
-    console.log('Connected to websocket server.');
-    listener.subscribe(this.onBtnEvent);
-  });
-
-  ros.on('error', function(error) {
-    console.log('Error connecting to websocket server: ', error);
-  });
-
-  ros.on('close', () => {
-    console.log('Connection to websocket server closed.');
-    this.conectToRos()
-  });
-
-  this.ros = ros
-  this.listener = listener
-}
 
 app.get('/hide_scratch_window', (req, res) => {
   hideScratchWindow()
   res.send('hide scratch window ok')
+  console.log(mainWindow.focused)
+  mainWindow.focus()
+  console.log(mainWindow.focused)
 })
 app.get('/close_scratch_window', (req, res) => {
   closeScratchWindow()
   res.send('close scratch window ok')
+  mainWindow.focus()
 })
 
 app.get('/run_scratch', (req, res) => {
@@ -92,15 +68,13 @@ app.get('/run_scratch', (req, res) => {
   })
 })
 
-mdns.start_mdns_server()
-
 const server = createServer(app);
 
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 
 function createWindow() {
-  let win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 240,
     height: 320,
     // autoHideMenuBar: true, //remove menubar but save minimize maxmize controls
@@ -109,15 +83,29 @@ function createWindow() {
       nodeIntegration: true
     }
   })
-  // win.loadFile('../build/index.html')
-  // win.loadURL(`file://${__dirname}/scratch-runner/app.html`)
-  win.loadURL('http://localhost:3000/index')
-  console.log(win)
-}
 
+  mainWindow.on('blur', () => {
+    console.log('mainWindow blured')
+    mainWindow.focused = false
+  })
+
+  mainWindow.on('focus', () => {
+    console.log('mainWindow focused')
+    mainWindow.focused = true
+  })
+  mainWindow.on('show', () => {
+    console.log('mainWindow showed')
+  })
+  // mainWindow.loadFile('../build/index.html')
+  // mainWindow.loadURL(`file://${__dirname}/scratch-runner/app.html`)
+  // mainWindow.loadURL('http://localhost:8000/index')
+  mainWindow.loadURL('http://localhost:3000')
+  console.log(mainWindow)
+}
+mdns.start_mdns_server()
 electron.app.on('ready', () => {
-  server.listen(3000, () => {
-    console.log('Listening on http://localhost:3000');
+  server.listen(8000, () => {
+    debuglog('Listening on http://localhost:8000');
     createWindow()
     // createScratchWindow()
   });

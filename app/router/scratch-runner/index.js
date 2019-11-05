@@ -1,5 +1,5 @@
 // const debuglog = require('util').debuglog('scratch-runner')
-const debuglog = console.log
+// const debuglog = console.log
 const {
   BrowserWindow
 } = require('electron')
@@ -7,7 +7,7 @@ const fs = require('fs');
 const os = require('os')
 const path = require('path')
 const platform = os.platform()
-var save_dir = path.join(__dirname, '/temp')
+var save_dir = path.join(__dirname, '../../temp')
 var active = true
 
 var scratchWindow = null
@@ -29,7 +29,7 @@ function createScratchWindow(file_path = null) {
     width: 240,
     height: 320,
     // autoHideMenuBar: true, //remove menubar but save minimize maxmize controls
-    frame: false, //remove menubar and control
+    // frame: false, //remove menubar and control
     webPreferences: {
       nodeIntegration: true
     }
@@ -83,10 +83,10 @@ function runScratch(file_path) {
 
 function watchFile(save_dir) {
   if (!fs.existsSync(save_dir)) {
-    debuglog('dir ', save_dir, 'do not exist')
+    console.log('dir ', save_dir, 'do not exist')
     return
   }
-  debuglog('watch dir is ', save_dir)
+  console.log('watch dir is ', save_dir)
   fs.watch(save_dir, (event, filename) => {
     var file_path = path.join(save_dir, filename)
     console.log(filename, event, fs.existsSync(file_path))

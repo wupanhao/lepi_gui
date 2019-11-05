@@ -6,6 +6,7 @@ const AudioEngine = require('scratch-audio')
 const ScratchSVGRenderer = require('./build/scratch-svg-renderer')
 
 const fs = require("fs");
+const axios = require("axios");
 // const parser = require('scratch-parser');
 
 const Scratch = window.Scratch = window.Scratch || {};
@@ -13,11 +14,14 @@ const Scratch = window.Scratch = window.Scratch || {};
 // const JSZip = require("jszip")
 const JSZipUtils = require("jszip-utils")
 
+const env = require('../../../env')
+
 class Runner {
   constructor() {
     const vm = new VirtualMachine();
     Scratch.vm = vm
     this.vm = vm
+    this.running = false
     // vm.setTurboMode(true);
     const storage = new ScratchStorage();
     // var AssetType = storage.AssetType;
@@ -27,9 +31,17 @@ class Runner {
 
     vm.on('workspaceUpdate', function() {
       setTimeout(function() {}, 100);
-      vm.greenFlag();
+      // vm.greenFlag();
     })
 
+    vm.on('PROJECT_RUN_START', () => {
+      console.log('PROJECT_RUN_START')
+      this.running = true
+    })
+    vm.on('PROJECT_RUN_STOP', () => {
+      console.log('PROJECT_RUN_STOP')
+      this.running = false
+    })
     var canvas = document.getElementById('scratch-stage');
     var renderer = new ScratchRender(canvas);
     Scratch.renderer = renderer;
@@ -82,6 +94,17 @@ class Runner {
         return;
       }
       console.log(e)
+      if (e.keyCode == 69) { // E Exit
+        if (!this.running) {
+          axios.get(env.api_base_url + '/hide_scratch_window')
+        }
+        this.vm.stopAll()
+        this.running = false
+      } else if (e.keyCode == 82) {
+        this.vm.greenFlag()
+        this.running = true
+      }
+
       Scratch.vm.postIOData('keyboard', {
         key: e.key,
         isDown: true
@@ -116,9 +139,9 @@ class Runner {
     vm.start()
   }
   loadProjectFromFile(path) {
-      var buffer = fs.readFileSync(path);
-      console.log(buffer)
-      this.vm.loadProject(buffer)
+    var buffer = fs.readFileSync(path);
+    console.log(buffer)
+    this.vm.loadProject(buffer)
 
     /*
     fs.readFile(path, (err, buffer) => {

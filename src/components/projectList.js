@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 import file from '../public/images/p.png';
-
+import env from '../env'
 class ProjectList extends Component {
     constructor(props) {
         super(props)
@@ -39,7 +39,7 @@ class ProjectList extends Component {
         const _this = this;
         $.ajax({
             type: 'get',
-            url: 'http://localhost:3000/getUrlList',
+            url: env.api_base_url + '/getUrlList',
             data: {},
             success: (data) => {
                 _this.setState({
@@ -97,16 +97,7 @@ class ProjectList extends Component {
                      });
                      }*/
                     break;
-                case 27: // Ese
-                    $.ajax({
-                        type: 'get',
-                        url: 'http://localhost:3000/hide_scratch_window',
-                        data: {},
-                        success: (data) => {
-                            console.log(data)
-                        },
-                        dataType: 'jsonp',
-                    });
+
                 case 38:
                     /*if (i - 2 >= 0 && i - 2 < divs.length) {
                         _this.setState({
@@ -152,30 +143,42 @@ class ProjectList extends Component {
     }
     onClick(item) {
         console.log(item)
-        if (this.state.isOpen) {
-            console.log("program running")
+
+        if (this.state.i < 0 || this.state.i > this.state.indexList.length) {
             return
-        } else {
-            if (this.state.i < 0 || this.state.i > this.state.indexList.length) {
-                return
-            }
-            this.setState({
-                isOpen: true
-            });
-            const _this = this;
-            const file_path = this.state.indexList[this.state.i]
-            $.ajax({
-                type: 'get',
-                url: 'http://localhost:3000/run_scratch',
-                data: {
-                    file_path: file_path
-                },
-                success: (data) => {
-                    console.log(data)
-                },
-                dataType: 'jsonp',
-            });
         }
+
+        if (this.state.isOpen) {
+            setTimeout(() => {
+                this.setState({
+                    isOpen: false
+                })
+            }, 1000)
+            return
+        }
+
+        this.setState({
+            isOpen: true
+        });
+        setTimeout(() => {
+            this.setState({
+                isOpen: false
+            })
+        }, 1000)
+
+        const _this = this;
+        const file_path = this.state.indexList[this.state.i]
+        $.ajax({
+            type: 'get',
+            url: env.api_base_url + '/run_scratch',
+            data: {
+                file_path: file_path
+            },
+            success: (data) => {
+                console.log(data)
+            },
+            dataType: 'jsonp',
+        });
     }
     //下一页
     setNext() {
@@ -202,15 +205,26 @@ class ProjectList extends Component {
             })
         }
     }
+
+    baseName(file_path) {
+        var start = file_path.lastIndexOf('/')
+        if (start >= 0) {
+            return file_path.substr(start + 1, file_path.lastIndexOf('.') - start - 1)
+        } else {
+            start = file_path.lastIndexOf('\\')
+            return file_path.substr(start + 1, file_path.lastIndexOf('.') - start - 1)
+        }
+    }
+
     render() {
         return (
             <div>
                 <Header />
                 <div className="s-body">
-                    {this.state.indexList.map((d, index) => {
+                    {this.state.indexList.map((file_path, index) => {
                         return <div key={index} onClick={ this.onClick } className={`pl-img-l ${this.state.i === index ? 'active' : ''}`}>
                                 <Link name="pl-a"><img src={file} alt=""/>
-                                    <div>{d.substr(d.lastIndexOf('/')+1, d.lastIndexOf('.') - d.lastIndexOf('/') -1)}</div>
+                                    <div>{this.baseName(file_path)}</div>
                                 </Link>
                             </div>
                     })}

@@ -29,7 +29,11 @@ wss.on('connection', function connection(ws, req) {
 const app = express()
 // app.use('/scratch-runner', express.static(path.join(__dirname, 'scratch-runner')));
 // app.use('/wifi', express.static(__dirname + '/wifi'));
-
+app.use('/', (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next()
+})
 app.use('/wifi', wifiRouter)
 app.use('/upload', uploadRouter)
 app.use('/getUrlList', fileRouter)
