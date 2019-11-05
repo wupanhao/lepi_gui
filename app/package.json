@@ -15,10 +15,12 @@
     "body-parser": "^1.19.0",
     "electron": "^7.0.1",
     "express": "^4.17.1",
+    "jszip-utils": "^0.1.0",
     "lowdb": "^1.0.0",
     "multer": "^1.4.2",
     "multicast-dns": "^7.2.0",
     "recursive-readdir": "^2.2.2",
+    "roslib": "^1.0.1",
     "rpi-wifi-connection": "^1.0.14",
     "scratch-audio": "^0.1.0-prerelease.20190925183642"
   }

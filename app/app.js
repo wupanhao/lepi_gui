@@ -111,8 +111,8 @@ function createWindow() {
   })
   // mainWindow.loadFile('../build/index.html')
   // mainWindow.loadURL(`file://${__dirname}/scratch-runner/app.html`)
-  // mainWindow.loadURL('http://localhost:8000/index')
-  mainWindow.loadURL('http://localhost:3000')
+  mainWindow.loadURL('http://localhost:8000/index')
+  //mainWindow.loadURL('http://localhost:3000')
   console.log(mainWindow)
 }
 // mdns.start_mdns_server()
