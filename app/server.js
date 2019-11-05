@@ -34,6 +34,7 @@ app.use('/', (req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Content-Type");
   next()
 })
+app.use('/static', express.static(path.join(__dirname, 'router/static')))
 app.use('/wifi', wifiRouter)
 app.use('/upload', uploadRouter)
 app.use('/getUrlList', fileRouter)

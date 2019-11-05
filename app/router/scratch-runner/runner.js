@@ -96,7 +96,7 @@ class Runner {
       console.log(e)
       if (e.keyCode == 69) { // E Exit
         if (!this.running) {
-          axios.get(env.api_base_url + '/hide_scratch_window')
+          axios.get(env.api_base_url + '/close_scratch_window')
         }
         this.vm.stopAll()
         this.running = false
@@ -202,6 +202,22 @@ ipcRenderer.on('loadFile', (event, arg) => {
 ipcRenderer.on('loadUrl', (event, arg) => {
   console.log(arg) // prints "pong"
   arg && arg.path && runner.loadProjectFromUrl(arg.path)
+})
+
+ipcRenderer.on('key-event', (event, message) => {
+
+  // console.log(event, '-', message)
+  if (message.type == 1) {
+    var e = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      // key: message.value,
+      keyCode: message.value,
+      // code: "KeyQ",
+      // shiftKey: true
+    });
+    document.dispatchEvent(e);
+  }
 })
 
 /*

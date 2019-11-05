@@ -1,13 +1,14 @@
+const ROSLIB = require('roslib');
+
 class ros_client {
-  constructor() {
-    this.url = env.ros_base_url
-    this.conectToRos()
+  constructor(ros_base_url) {
+    this.url = ros_base_url
+    this.listener = null
+    // this.conectToRos()
   }
 
   conectToRos(btnHandler) {
     console.log('trying to conect to ros server:')
-    this.conectToRos()
-    this.listener.unsubscribe();
     try {
       var ros = new ROSLIB.Ros({
         url: this.url
@@ -15,9 +16,15 @@ class ros_client {
     } catch (e) {
       console.log('ros client init error:', e)
       console.log('trying to reconect after 3 seconds')
-      return this.conectToRos()
+      // return
+      setTimeout(() => {
+        this.conectToRos()
+      }, 3000)
+      return
     }
-
+    if (this.listener != null) {
+      this.listener.unsubscribe();
+    }
     var listener = new ROSLIB.Topic({
       ros: ros,
       name: '/ubiquityrobot/pi_driver_node/button_event',
@@ -27,7 +34,7 @@ class ros_client {
     ros.on('connection', () => {
       console.log('Connected to websocket server.');
       if (btnHandler) {
-        listener.subscribe(this.onBtnEvent);
+        listener.subscribe(btnHandler);
       }
     });
 
@@ -36,7 +43,7 @@ class ros_client {
     });
 
     ros.on('close', () => {
-      console.log('Connection to websocket server closed.');
+      console.log('Connection to websocket server closed. retrying');
       this.conectToRos()
     });
 
@@ -45,4 +52,4 @@ class ros_client {
   }
 }
 
-module.exports = ROS_Client
+module.exports = ros_client

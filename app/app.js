@@ -8,8 +8,6 @@ const {
 //const WebSocket = require('ws');
 const os = require('os');
 
-const ROSLIB = require('roslib');
-
 const mdns = require('./router/mdns')
 
 const env = require('../env')
@@ -22,28 +20,38 @@ var {
 const app = require('./server')
 
 var mainWindow = null
+var scratchWindow = null
 
 function onBtnEvent(message) {
   // console.log('Received message on ' + listener.name + ': ', message);
-  console.log(message)
+  // console.log(message)
   // listener.unsubscribe();
-  if (message.type == 1) {
-    var e = new KeyboardEvent('keydown', {
-      bubbles: true,
-      cancelable: true,
-      // key: message.value,
-      keyCode: message.value,
-      // code: "KeyQ",
-      // shiftKey: true
-    });
-    // document.dispatchEvent(e);
-    if (mainWindow != null && mainWindow.focused) {
-      mainWindow.webContents.send('key-event', e);
+  if (mainWindow == null) {
+    console.log('mainWindow == null')
+    return
+  }
+  if (mainWindow.focused) {
+    mainWindow.webContents.send('key-event', message);
+    if (message.value == 82 && scratchWindow != null) {
+      console.log('focus scratchWindow')
+      scratchWindow.show()
+    }
+  } else {
+    if (message.value == 66) {
+      hideScratchWindow()
+      mainWindow.focus()
+    } else {
+      if (scratchWindow != null) {
+        // console.log('send to scratchWindow')
+        scratchWindow.webContents.send('key-event', message);
+      }
     }
   }
 }
 
-
+const RosClient = require('./router/ros')
+const ros = new RosClient(env.ros_base_url)
+ros.conectToRos(onBtnEvent)
 
 app.get('/hide_scratch_window', (req, res) => {
   hideScratchWindow()
@@ -54,6 +62,7 @@ app.get('/hide_scratch_window', (req, res) => {
 })
 app.get('/close_scratch_window', (req, res) => {
   closeScratchWindow()
+  scratchWindow = null
   res.send('close scratch window ok')
   mainWindow.focus()
 })
@@ -61,7 +70,11 @@ app.get('/close_scratch_window', (req, res) => {
 app.get('/run_scratch', (req, res) => {
   console.log(req.query)
   if (req.query && req.query.file_path) {
-    runScratch(req.query.file_path)
+    if (scratchWindow == null) {
+      scratchWindow = runScratch(req.query.file_path)
+    } else {
+      runScratch(req.query.file_path)
+    }
   }
   res.json({
     "status": "ok"
@@ -102,7 +115,7 @@ function createWindow() {
   mainWindow.loadURL('http://localhost:3000')
   console.log(mainWindow)
 }
-mdns.start_mdns_server()
+// mdns.start_mdns_server()
 electron.app.on('ready', () => {
   server.listen(8000, () => {
     debuglog('Listening on http://localhost:8000');

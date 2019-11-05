@@ -25,26 +25,25 @@ function getProgramDir() {
 }
 
 function createScratchWindow(file_path = null) {
-  let win = new BrowserWindow({
+  scratchWindow = new BrowserWindow({
     width: 240,
     height: 320,
     // autoHideMenuBar: true, //remove menubar but save minimize maxmize controls
-    // frame: false, //remove menubar and control
+    frame: false, //remove menubar and control
     webPreferences: {
       nodeIntegration: true
     }
   })
-  // win.loadFile('app.html')
+  // scratchWindow.loadFile('app.html')
   if (file_path) {
-    // win.loadURL(`http://localhost:3000/scratch-runner/app.html?path=${file_path}`)
-    win.loadURL(`file://${__dirname}/app.html?path=${file_path}`)
+    // scratchWindow.loadURL(`http://localhost:3000/scratch-runner/app.html?path=${file_path}`)
+    scratchWindow.loadURL(`file://${__dirname}/app.html?path=${file_path}`)
   } else {
-    // win.loadURL(`http://localhost:3000/scratch-runner/app.html`)
-    win.loadURL(`file://${__dirname}/app.html`)
+    // scratchWindow.loadURL(`http://localhost:3000/scratch-runner/app.html`)
+    scratchWindow.loadURL(`file://${__dirname}/app.html`)
   }
-  scratchWindow = win
-  // win.loadURL('http://localhost:8073/playground/index.html')
-  return win
+  // scratchWindow.loadURL('http://localhost:8073/playground/index.html')
+  return scratchWindow
 }
 
 function hideScratchWindow() {
@@ -79,6 +78,7 @@ function runScratch(file_path) {
   } else {
     createScratchWindow(file_path)
   }
+  return scratchWindow
 }
 
 function watchFile(save_dir) {
@@ -107,6 +107,7 @@ function watchFile(save_dir) {
 module.exports = {
   runScratch: runScratch,
   getProgramDir: getProgramDir,
+  scratchWindow: scratchWindow,
   hideScratchWindow: hideScratchWindow,
   closeScratchWindow: closeScratchWindow,
   watchFile: watchFile
