@@ -33,12 +33,12 @@ function start_mdns_server() {
       if (ips.length > 0) {
         console.log(ips)
         mdns.respond({
-          answers: ips.map((dev, ip) => {
+          answers: ips.map((dev) => {
             return {
               name: HOSTNAME,
               type: 'A',
               ttl: 300,
-              data: ip
+              data: dev.ip
             }
           })
         })
