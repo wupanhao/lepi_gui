@@ -9,6 +9,8 @@ const fs = require("fs");
 const axios = require("axios");
 // const parser = require('scratch-parser');
 
+const keyCodeMap = require('./keyCodeMap')
+
 const Scratch = window.Scratch = window.Scratch || {};
 
 // const JSZip = require("jszip")
@@ -22,7 +24,7 @@ class Runner {
     Scratch.vm = vm
     this.vm = vm
     this.running = false
-    // vm.setTurboMode(true);
+    vm.setTurboMode(true);
     const storage = new ScratchStorage();
     // var AssetType = storage.AssetType;
     // storage.addWebSource([AssetType.Project], getProjectUrl);
@@ -213,15 +215,37 @@ ipcRenderer.on('key-event', (event, message) => {
 
   // console.log(event, '-', message)
   if (message.type == 1) {
-    var e = new KeyboardEvent('keydown', {
+    var keydown = new KeyboardEvent('keydown', {
       bubbles: true,
       cancelable: true,
-      // key: message.value,
+      key: keyCodeMap[message.value],
       keyCode: message.value,
       // code: "KeyQ",
       // shiftKey: true
     });
-    document.dispatchEvent(e);
+    document.dispatchEvent(keydown);
+    /*
+    var keypress = new KeyboardEvent('keypress', {
+      bubbles: true,
+      cancelable: true,
+      key: message.value,
+      keyCode: message.value,
+      // code: "KeyQ",
+      // shiftKey: true
+    });
+    document.dispatchEvent(keypress);
+     */
+  }
+  if (message.type == 3) {
+    var keyup = new KeyboardEvent('keyup', {
+      bubbles: true,
+      cancelable: true,
+      key: keyCodeMap[message.value],
+      keyCode: message.value,
+      // code: "KeyQ",
+      // shiftKey: true
+    });
+    document.dispatchEvent(keyup);
   }
 })
 

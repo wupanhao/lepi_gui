@@ -22,14 +22,24 @@ const app = require('./server')
 var mainWindow = null
 var scratchWindow = null
 
+const btnState = {
+
+}
+
 function onBtnEvent(message) {
   // console.log('Received message on ' + listener.name + ': ', message);
   // console.log(message)
   // listener.unsubscribe();
+
+  if (message.value && message.type) {
+    btnState[message.value] = message.type
+  }
+
   if (mainWindow == null) {
     console.log('mainWindow == null')
     return
   }
+
   if (mainWindow.focused) {
     mainWindow.webContents.send('key-event', message);
     if (message.value == 82 && scratchWindow != null) {
@@ -50,7 +60,7 @@ function onBtnEvent(message) {
 }
 
 const RosClient = require('./router/ros')
-const ros = new RosClient(env.ros_base_url,onBtnEvent)
+const ros = new RosClient(env.ros_base_url, onBtnEvent)
 ros.conectToRos()
 
 app.get('/hide_scratch_window', (req, res) => {
