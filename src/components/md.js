@@ -135,7 +135,7 @@ class MD extends Component {
                     <table className="s_table" rules="none">
                         <tbody>
                         <tr>
-                            <th>M名</th>
+                            <th>端口</th>
                             <th>速度</th>
                             <th>编码器</th>
                         </tr>

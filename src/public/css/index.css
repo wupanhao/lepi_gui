@@ -342,7 +342,6 @@ html body a:link{text-decoration:none; cursor:pointer; color:#ffffff;}
   font-weight: 500;
 }
 .s_table td {
-  text-decoration:underline;
 }
 .s-body table {
   height: 160px;
