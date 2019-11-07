@@ -79,14 +79,8 @@ class ProjectList extends Component {
                 i: 0
             });
         }
-<<<<<<< HEAD
-        if(e && e.keyCode){
-            console.log('keyCode : ', e.keyCode);
-            switch(e.keyCode) {
-=======
         if (e && e.keyCode) {
             switch (e.keyCode) {
->>>>>>> a22f52e7e0c92feee0efa4e7d6ee2430faabe524
                 case 13: //回车事件
                     const links = $('a[name="pl-a"]');
                     if (_this.state.i <= links.length && links.length > 0 && i != -1) {
@@ -197,16 +191,9 @@ class ProjectList extends Component {
     setUp() {
         if (this.state.current > 1) {
             this.setState({
-<<<<<<< HEAD
-                num:this.state.num - this.state.pageSize,
-                current:this.state.current - 1
-            },function () {
-=======
                 num: this.state.num - this.state.pageSize,
                 current: this.state.current - 1
             }, function() {
-                // console.log(this.state)
->>>>>>> a22f52e7e0c92feee0efa4e7d6ee2430faabe524
                 this.pageNext(this.state.num)
             })
         }
