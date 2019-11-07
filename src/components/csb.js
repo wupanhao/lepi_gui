@@ -8,7 +8,9 @@ class CSB extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            val: 367
+            val: 367,
+            i: -1,
+            data: [367, 368, 369, 370, 371]
         }
 
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -25,23 +27,41 @@ class CSB extends Component {
         document.removeEventListener("keydown", this.listenCsbDiv)
     }
     onClick() {
-        const v = $('#sel-csb').val();
-        console.log('v : ', v);
-        this.setState({val: v});
+        const data = this.state.data;
+        const i = this.state.i;
+        this.setState({val: data[i] || ''});
     }
     listenCsbDiv = (e) => {
         const _this = this;
+        const divs = $('.p-text-span');
+        const i = _this.state.i;
+        if (i === -1) {
+            _this.setState({
+                i: 0
+            });
+        }
         if(e && e.keyCode){
+            // console.log('keyCode : ', e.keyCode);
             switch(e.keyCode) {
-                case 67://Choose 'C' 67
-                    $('#sel-csb').focus()
-                    break;
-                case 13://'enter ' 13
+                case 13:
                     _this.onClick();
+                    break;
+                case 37:
+                    if (i >= 1 && i - 1 < divs.length) {
+                        _this.setState({
+                            i: i - 1
+                        });
+                    }
+                    break;
+                case 39:
+                    if (i >= 0 && i + 1 < divs.length) {
+                        _this.setState({
+                            i: i + 1
+                        });
+                    }
                     break;
             }
         }
-
     }
 
     render() {
@@ -49,21 +69,23 @@ class CSB extends Component {
             <div>
                 <Header />
                 <div className="s-body">
-                    <div>
-                        <div className="p-text"><select className="p-select" id="sel-csb">
-                            <option value="367">P1</option>
-                            <option value="368">P2</option>
-                            <option value="369">P3</option>
-                            <option value="360">P4</option>
-                            <option value="361">P5</option>
-                        </select></div>
-                    </div>
+
                     <div className="p-center">
                         <div className="p-line"></div>
                     </div>
                     <div className="p-bottom">
                         <div>距离障碍物：{this.state.val} &nbsp;CM</div>
                     </div>
+                    <div>
+                        <div className="p-text">
+                            <span className={`p-text-span ${this.state.i === 0 ? 's-active' : ''}`} value="367">S1</span>
+                            <span className={`p-text-span ${this.state.i === 1 ? 's-active' : ''}`} value="368">S2</span>
+                            <span className={`p-text-span ${this.state.i === 2 ? 's-active' : ''}`} value="369">S3</span>
+                            <span className={`p-text-span ${this.state.i === 3 ? 's-active' : ''}`} value="360">S4</span>
+                            <span className={`p-text-span ${this.state.i === 4 ? 's-active' : ''}`} value="361">S5</span>
+                        </div>
+                    </div>
+
                 </div>
                 <Footer />
             </div>

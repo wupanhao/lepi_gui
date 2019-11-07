@@ -33,7 +33,7 @@ class Foot extends Component {
                 case 66:// 'B' 66，返回
                     _this.goBack();
                     break;
-                case 27://'Esc'   对应退出键
+                case 72://'H'   对应Home键
                     $('a[name="jslp-home"]')[0].click();
                     break;
             }

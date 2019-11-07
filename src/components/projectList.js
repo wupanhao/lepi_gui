@@ -69,11 +69,12 @@ class ProjectList extends Component {
             _this.setState({i: 0});
         }
         if(e && e.keyCode){
+            console.log('keyCode : ', e.keyCode);
             switch(e.keyCode) {
                 case 13: //回车事件
                     const links = $('a[name="pl-a"]');
                     if (_this.state.i <= links.length && links.length > 0 && i != -1) {
-                        links[_this.state.i].click();
+                        links[_this.state.i] ? links[_this.state.i].click() : null;
                     }
                     if(_this.state.i > links.length || _this.state.i < 0){
                         _this.setState({
@@ -87,44 +88,38 @@ class ProjectList extends Component {
                      }*/
                     break;
                 case 38:
-                    /*if (i - 2 >= 0 && i - 2 < divs.length) {
+                    if (i - 2 >= 0 && i - 2 < divs.length) {
                         _this.setState({
                             i: i - 2
                         });
-                    }*/
+                    }
+                    break;
+                case 40:
+                    if (i >= 0 && i + 2 < divs.length) {
+                        _this.setState({
+                            i: i + 2
+                        });
+                    }
+                    break;
+                case 37:
                     if (i >= 1 && i - 1 < divs.length) {
                         _this.setState({
                             i: i - 1
                         });
                     }
                     break;
-                case 40:
-                    /*if (i >= 0 && i + 2 < divs.length) {
-                        _this.setState({
-                            i: i + 2
-                        });
-                    }*/
+                case 39:
                     if (i >= 0 && i + 1 < divs.length) {
                         _this.setState({
                             i: i + 1
                         });
                     }
                     break;
-                case 37:
+                case 82: //R
                     _this.setUp();
-                    /*if (i >= 1 && i - 1 < divs.length) {
-                        _this.setState({
-                            i: i - 1
-                        });
-                    }*/
                     break;
-                case 39:
+                case 69: //E
                     _this.setNext();
-                    /*if (i >= 0 && i + 1 < divs.length) {
-                        _this.setState({
-                            i: i + 1
-                        });
-                    }*/
                     break;
             }
         }
@@ -152,7 +147,6 @@ class ProjectList extends Component {
                 num:this.state.num - this.state.pageSize,
                 current:this.state.current - 1
             },function () {
-                // console.log(this.state)
                 this.pageNext(this.state.num)
             })
         }

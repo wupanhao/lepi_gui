@@ -45,7 +45,7 @@ class Setting extends Component {
                 case 13: //回车事件
                     const links = $('a[name="set-a"]');
                     if (links.length > 0 && i != -1) {
-                        links[this.state.s].click();
+                        links[this.state.s] ? links[this.state.s].click() : null;
                     }
                    /* if (i === -1) {
                         _this.setState({

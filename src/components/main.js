@@ -48,7 +48,7 @@ class Main extends Component {
                 case 13: //回车事件
                     const links = $('a[name="main-a"]');
                     if (links.length > 0 && i != -1) {
-                        links[this.state.i].click();
+                        links[this.state.i] ? links[this.state.i].click() : null;
                     }
                     /*if (i === -1) {
                         _this.setState({

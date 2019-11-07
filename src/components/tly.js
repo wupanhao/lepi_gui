@@ -41,7 +41,7 @@ class CP extends Component {
                 case 13://回车事件
                     const links = $('a[name="tly-a"]');
                     if (links.length > 0 && i != -1) {
-                        links[this.state.l].click();
+                        links[this.state.l] ? links[this.state.l].click() : null;
                     }
                     /*if (i === -1) {
                         _this.setState({l: 0});

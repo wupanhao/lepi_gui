@@ -47,7 +47,7 @@ class Test extends Component {
                 case 13: //回车事件
                     const links = $('a[name="test-a"]');
                     if (links.length > 0 && i != -1) {
-                        links[this.state.t].click();
+                        links[this.state.t] ? links[this.state.t].click() : null;
                     }
                     /*if (i === -1) {
                         _this.setState({

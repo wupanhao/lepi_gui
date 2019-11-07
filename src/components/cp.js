@@ -10,7 +10,8 @@ class CP extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isClick: true
+            isClick: true,
+            t: -1
         }
         this.onClick = this.onClick.bind(this);
         this.listenCPDiv = this.listenCPDiv.bind(this);
@@ -26,13 +27,32 @@ class CP extends Component {
     }
     listenCPDiv = (e) => {
         const _this = this;
+        const divs = $('.sel-btn');
+        const i = _this.state.t;
+        if (i === -1) {
+            _this.setState({
+                t: 0
+            });
+        }
         if(e && e.keyCode){
+            console.log('keyCode : ', e.keyCode);
             switch(e.keyCode) {
-                case 67://Choose 'C' 67
-                    $('.p-select').focus()
-                    break;
-                case 82://'R' 82
+                case 13:
                     _this.onClick();
+                    break;
+                case 37:
+                    if (i >= 1 && i - 1 < divs.length) {
+                        _this.setState({
+                            t: i - 1
+                        });
+                    }
+                    break;
+                case 39:
+                    if (i >= 0 && i + 1 < divs.length) {
+                        _this.setState({
+                            t: i + 1
+                        });
+                    }
                     break;
 
             }
@@ -51,13 +71,13 @@ class CP extends Component {
                     <div className="s-roll">
                         <a onClick={() => this.onClick()}><img src={this.state.isClick ? y1 : y2} alt=""/></a>
                     </div>
-                    <div className="text-p1"><select className="p-select">
-                        <option>P1</option>
-                        <option>P2</option>
-                        <option>P3</option>
-                        <option>P4</option>
-                        <option>P5</option>
-                    </select></div>
+                    <div className="text-p1">
+                        <span className={`sel-btn ${this.state.t === 0 ? 's-active' : ''}`}>S1</span>
+                        <span className={`sel-btn ${this.state.t === 1 ? 's-active' : ''}`}>S2</span>
+                        <span className={`sel-btn ${this.state.t === 2 ? 's-active' : ''}`}>S3</span>
+                        <span className={`sel-btn ${this.state.t === 3 ? 's-active' : ''}`}>S4</span>
+                        <span className={`sel-btn ${this.state.t === 4 ? 's-active' : ''}`}>S5</span>
+                    </div>
                 </div>
                 <Footer />
             </div>
