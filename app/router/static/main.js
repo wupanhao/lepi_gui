@@ -1,6 +1,8 @@
 const {
-	ipcRenderer
+	ipcRenderer,
+	remote
 } = require('electron')
+var ros = remote.getGlobal('ros')
 
 ipcRenderer.on('key-event', (event, message) => {
 	console.log(event, message)
@@ -13,7 +15,11 @@ ipcRenderer.on('key-event', (event, message) => {
 			// code: "KeyQ",
 			// shiftKey: true
 		});
-		// document.dispatchEvent(e);
+		document.dispatchEvent(e);
+		ros.getMotorEncoder(1).then(value => {
+			console.log(value)
+		})
 	}
-	document.dispatchEvent(e);
+	// document.dispatchEvent(e);
+
 })

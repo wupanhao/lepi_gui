@@ -1,7 +1,8 @@
 const ROSLIB = require('roslib');
+const ROS_NAMESPACE = '/ubiquityrobot/'
 
 class ros_client {
-  constructor(ros_base_url,btnHandler) {
+  constructor(ros_base_url, btnHandler) {
     this.url = ros_base_url
     this.listener = null
     this.btnHandler = btnHandler
@@ -50,6 +51,29 @@ class ros_client {
 
     this.ros = ros
     this.listener = listener
+  }
+
+  getMotorEncoder(port) {
+    return new Promise((resolve) => {
+      var client = new ROSLIB.Service({
+        ros: this.ros,
+        name: ROS_NAMESPACE + 'pi_driver_node/motor_get_position',
+        serviceType: 'pi_driver/MotorGetPosition'
+      });
+
+      var request = new ROSLIB.ServiceRequest({
+        port: port
+      });
+
+      client.callService(request, (result) => {
+        console.log(result)
+        resolve(result.position)
+      });
+    })
+  }
+
+  setMotorSpeed(port, speed) {
+
   }
 }
 

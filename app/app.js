@@ -96,6 +96,8 @@ const server = createServer(app);
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 
+global.ros = ros
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 240,
@@ -121,7 +123,8 @@ function createWindow() {
   })
   // mainWindow.loadFile('../build/index.html')
   // mainWindow.loadURL(`file://${__dirname}/scratch-runner/app.html`)
-  mainWindow.loadURL('http://localhost:8000/index')
+  // mainWindow.loadURL('http://localhost:8000/index')
+  mainWindow.loadURL(env.index_base_url)
   //mainWindow.loadURL('http://localhost:3000')
   console.log(mainWindow)
 }
