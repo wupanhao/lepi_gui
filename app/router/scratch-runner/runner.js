@@ -210,9 +210,24 @@ ipcRenderer.on('loadUrl', (event, arg) => {
   console.log(arg) // prints "pong"
   arg && arg.path && runner.loadProjectFromUrl(arg.path)
 })
+const rotate90 = true
+
+const rotateMap = {
+  37: 38,
+  38: 39,
+  39: 40,
+  40: 37,
+  13: 32
+}
 
 ipcRenderer.on('key-event', (event, message) => {
 
+  // console.log(message.value, rotateMap.hasOwnProperty(message.value))
+
+  if (rotate90 && rotateMap.hasOwnProperty(message.value)) {
+    message.value = rotateMap[message.value]
+  }
+  // console.log(message.value)
   // console.log(event, '-', message)
   if (message.type == 1) {
     var keydown = new KeyboardEvent('keydown', {
