@@ -1,10 +1,38 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
+import axios from 'axios';
+import env from '../env';
 class BBXX extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            ips: [],
+        }
+        // <li><div className="s-label">公司：</div> 京师智创（北京）科技有限公司</li>
+    }
+
+    updateNetworks() {
+        axios.get(env.api_base_url + '/wifi/ips').then(result => {
+            console.log(result)
+            if (result && result.data && result.data.length > 0) {
+                this.setState({
+                    ips: result.data
+                })
+            }
+        })
+    }
+    componentWillMount() {}
+    componentDidMount() {
+        this.updateNetworks()
+        // document.addEventListener("keydown", this.onLyKeyDown)
+    }
+
+    componentWillUnmount() {
+        // document.removeEventListener("keydown", this.onLyKeyDown)
     }
     render() {
         return (
@@ -16,7 +44,11 @@ class BBXX extends Component {
                             <li><div className="s-label">名称：</div>乐派1号</li>
                             <li><div className="s-label">版本号：</div>0001</li>
                             <li><div className="s-label">出厂时间：</div>2019-09-1</li>
-                            <li><div className="s-label">公司：</div> 京师智创（北京）科技有限公司</li>
+                            {  //console.log(this.state) 
+                                this.state.ips.map(dev => {
+                                    return <li><div className="s-label">{dev.interface.substr(0,5)}：</div>{dev.ip} </li>
+                                })
+                            }
                             <li></li>
                             <li></li>
                         </ul>
@@ -29,5 +61,3 @@ class BBXX extends Component {
 }
 
 export default BBXX
-
-

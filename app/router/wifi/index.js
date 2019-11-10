@@ -4,6 +4,10 @@ const bodyParser = require('body-parser')
 const fs = require('fs');
 const path = require('path');
 
+const {
+	getLocalIps
+} = require('../mdns')
+
 // create application/json parser
 const jsonParser = bodyParser.json()
 
@@ -34,6 +38,10 @@ router.get('/', (req, res) => {
 
 router.get('/info', function(req, res) {
 	wifi.getStatus().then(info => res.json(info))
+})
+
+router.get('/ips', function(req, res) {
+	res.json(getLocalIps())
 })
 
 router.post('/connect', jsonParser, function(req, res) {

@@ -44,7 +44,7 @@ const upload = multer({
 // 单文件上传
 router.post('/', upload.single('upload_file'), function(req, res, next) {
 	var file = req.file;
-	// console.log(file)
+	console.log(file)
 	res.send({
 		ret_code: '0'
 	});

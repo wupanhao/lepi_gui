@@ -1,8 +1,10 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import history from '../public/js/history';
-import $ from  'jquery';
+import $ from 'jquery';
 
 class CZCP extends Component {
     constructor(props) {
@@ -18,8 +20,8 @@ class CZCP extends Component {
         document.removeEventListener("keydown", this.onYlKeyDown)
     }
     onYlKeyDown = (e) => {
-        if(e && e.keyCode){
-            switch(e.keyCode) {
+        if (e && e.keyCode) {
+            switch (e.keyCode) {
                 case 66: //返回 B
                     $('#czcp-back')[0].click();
                     break;
@@ -32,7 +34,7 @@ class CZCP extends Component {
     onClick() {
         //确定事件处理
     }
-    goBack(){
+    goBack() {
         history.goBack(-1)
     }
     render() {
@@ -41,8 +43,8 @@ class CZCP extends Component {
                 <Header />
                 <div className="s-body">
                     <div className="s-czcp">
-                        <div className="title">是否重置磁盘</div>
-                        <div className="s-alert">重置磁盘后你保存的所有数据将丢失！</div>
+                        <div className="title">是否清除数据</div>
+                        <div className="s-alert">清楚后你保存的所有数据将丢失！</div>
                     </div>
                 </div>
                 <div className="s-bottom">
@@ -55,5 +57,3 @@ class CZCP extends Component {
 }
 
 export default CZCP
-
-

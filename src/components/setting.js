@@ -37,8 +37,10 @@ class Setting extends Component {
         const _this = this;
         const divs = $('.s-img-l');
         const i = _this.state.s;
-        if(i === -1){
-            _this.setState({s: 0});
+        if (i === -1) {
+            _this.setState({
+                s: 0
+            });
         }
         if (e && e.keyCode) {
             switch (e.keyCode) {
@@ -47,11 +49,11 @@ class Setting extends Component {
                     if (links.length > 0 && i != -1) {
                         links[this.state.s] ? links[this.state.s].click() : null;
                     }
-                   /* if (i === -1) {
-                        _this.setState({
-                            s: 0
-                        });
-                    }*/
+                    /* if (i === -1) {
+                         _this.setState({
+                             s: 0
+                         });
+                     }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {
@@ -100,14 +102,13 @@ class Setting extends Component {
                         <Link to="/yl" name="set-a"><img src={sy} alt=""/><div>声音</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 3 ? 'active' : ''}`}>
-                        <img src={zt} alt=""/>
-                        <div>主题</div>
+                        <Link to="" name="set-a"><img src={zt} alt=""/><div>主题</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 4 ? 'active' : ''}`}>
                         <Link to="/czcp" name="set-a"><img src={czcp} alt=""/><div>重置磁盘</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 5 ? 'active' : ''}`}>
-                        <Link to="/bbxx" name="set-a"><img src={bbxx} alt=""/><div>版本信息</div></Link>
+                        <Link to="/bbxx" name="set-a"><img src={bbxx} alt=""/><div>主机信息</div></Link>
                     </div>
                 </div>
                 <Footer/>
