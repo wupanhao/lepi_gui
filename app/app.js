@@ -142,12 +142,10 @@ if (os.platform() === 'linux') {
 electron.app.on('ready', () => {
   server.listen(8000, () => {
     debuglog('Listening on http://localhost:8000');
-    createWindow()
-    /*
     ros.conectToRos(() => {
       console.log('connected to ros')
+      createWindow()
     })
-    */
 
     // createScratchWindow()
   });

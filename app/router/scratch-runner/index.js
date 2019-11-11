@@ -42,6 +42,7 @@ function createScratchWindow(file_path = null) {
     // scratchWindow.loadURL(`http://localhost:3000/scratch-runner/app.html`)
     scratchWindow.loadURL(`file://${__dirname}/app.html`)
   }
+  scratchWindow.setFullScreen(true);
   // scratchWindow.loadURL('http://localhost:8073/playground/index.html')
   return scratchWindow
 }
