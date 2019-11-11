@@ -28,12 +28,20 @@ class BBXX extends Component {
     componentWillMount() {}
     componentDidMount() {
         this.updateNetworks()
-        // document.addEventListener("keydown", this.onLyKeyDown)
+        document.addEventListener("keydown", this.onKeyDown)
     }
 
     componentWillUnmount() {
-        // document.removeEventListener("keydown", this.onLyKeyDown)
+        document.removeEventListener("keydown", this.onKeyDown)
     }
+
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
+
     render() {
         return (
             <div>

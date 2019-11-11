@@ -14,6 +14,9 @@ import {
 import '../public/js/keyboard_control';
 import $ from 'jquery';
 
+import {
+    T
+} from 'react-toast-mobile';
 class Main extends Component {
     constructor(props) {
         super(props)
@@ -23,19 +26,49 @@ class Main extends Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
-
+        this.waiteForRos = this.waiteForRos.bind(this)
     }
 
     componentDidMount() {
-        document.addEventListener("keydown", this.onKeyDown)
+        const ros = document.ros
+
+        if (ros && ros.isConnected()) {
+            document.addEventListener("keydown", this.onMainKeyDown)
+        } else {
+            T.loading('后台服务启动中')
+            this.waiteForRos()
+        }
 
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.onKeyDown)
+        document.removeEventListener("keydown", this.onMainKeyDown)
     }
-    onKeyDown = (e) => {
+    waiteForRos() {
+        const ros = document.ros
+        console.log('waiteForRos')
+        console.log(ros.isConnected())
+        if (ros && ros.isConnected()) {
+            console.log('connected')
+            document.addEventListener("keydown", this.onMainKeyDown)
+            T.confirm({
+                // title: '标题',
+                message: '加载完毕，可以开始你的创作了',
+            })
+            setTimeout(() => T.clear(), 1500)
+        } else {
+            setTimeout(this.waiteForRos, 1000)
+        }
+    }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
 
+    onMainKeyDown = (e) => {
+        this.onKeyDown(e)
         console.log(e)
         const _this = this;
         const divs = $('.s-main-l');
@@ -59,6 +92,8 @@ class Main extends Component {
                     }*/
                     break;
                 case 38:
+
+
                     if (i - 2 >= 0 && i - 2 < divs.length) {
                         _this.setState({
                             i: i - 2
@@ -125,6 +160,4 @@ class Main extends Component {
     }
 }
 
-export
-default
-Main
+export default Main

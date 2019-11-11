@@ -10,6 +10,7 @@ import {
 import $ from 'jquery';
 import file from '../public/images/p.png';
 import env from '../env'
+
 class ProjectList extends Component {
     constructor(props) {
         super(props)
@@ -69,7 +70,16 @@ class ProjectList extends Component {
     pageNext(num) {
         this.setPage(num)
     }
+
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
+
     onLyKeyDown = (e) => {
+        this.onKeyDown(e)
         console.log('keyCode : ', e.keyCode);
         const _this = this;
         const divs = $('.pl-img-l');
@@ -80,6 +90,7 @@ class ProjectList extends Component {
             });
         }
         if (e && e.keyCode) {
+
             switch (e.keyCode) {
                 case 13: //回车事件
                     const links = $('a[name="pl-a"]');

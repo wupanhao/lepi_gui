@@ -1,8 +1,10 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
-import $ from  'jquery';
+import $ from 'jquery';
 class YS extends Component {
     constructor(props) {
         super(props)
@@ -19,14 +21,21 @@ class YS extends Component {
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
     }
-    componentDidMount(){
+    componentDidMount() {
         document.addEventListener("keydown", this.listenCPDiv)
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         document.removeEventListener("keydown", this.listenCPDiv)
     }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     listenCPDiv = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.ys_u_s');
         const i = _this.state.i;
@@ -35,17 +44,17 @@ class YS extends Component {
                 i: 0
             });
         }
-        if(e && e.keyCode){
-            switch(e.keyCode) {
+        if (e && e.keyCode) {
+            switch (e.keyCode) {
                 case 13:
-                   /* const p = $('#p-select').val();
-                    _this.setState({R: 132,
-                        B: 180,
-                        G: 120,
-                        C: 55,
-                        M: 16,
-                        Y: 63,
-                        K: 0});*/
+                    /* const p = $('#p-select').val();
+                     _this.setState({R: 132,
+                         B: 180,
+                         G: 120,
+                         C: 55,
+                         M: 16,
+                         Y: 63,
+                         K: 0});*/
                     break;
                 case 37:
                     if (i >= 1 && i - 1 < divs.length) {
@@ -120,5 +129,3 @@ class YS extends Component {
 }
 
 export default YS
-
-

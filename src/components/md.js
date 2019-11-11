@@ -1,8 +1,10 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
-import $ from  'jquery';
+import $ from 'jquery';
 import bt1 from '../public/images/bt1.png';
 import bt2 from '../public/images/bt2.png';
 
@@ -11,11 +13,26 @@ class MD extends Component {
         super(props)
         this.state = {
             t: -1,
-            M1: {v: 0, val: 0},
-            M2: {v: 0, val: 0},
-            M3: {v: 0, val: 0},
-            M4: {v: 0, val: 0},
-            M5: {v: 0, val: 0},
+            M1: {
+                v: 0,
+                val: 0
+            },
+            M2: {
+                v: 0,
+                val: 0
+            },
+            M3: {
+                v: 0,
+                val: 0
+            },
+            M4: {
+                v: 0,
+                val: 0
+            },
+            M5: {
+                v: 0,
+                val: 0
+            },
             m1Open: false,
             m2Open: false,
             m3Open: false,
@@ -34,8 +51,14 @@ class MD extends Component {
     componentWillUnmount() {
         document.removeEventListener("keydown", this.onMDKeyDown)
     }
-
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     onMDKeyDown = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.s_table_tr');
         const i = _this.state.t;
@@ -54,14 +77,18 @@ class MD extends Component {
                         divAs[this.state.t] ? divAs[this.state.t].click() : null;
                     }
                     break;
-                case 38://上
+                case 38: //上
                     if (i - 1 >= 0 && i - 1 < divs.length) {
-                        _this.setState({t: i - 1});
+                        _this.setState({
+                            t: i - 1
+                        });
                     }
                     break;
-                case 40://下
+                case 40: //下
                     if (i >= 0 && i + 1 < divs.length) {
-                        _this.setState({t: i + 1});
+                        _this.setState({
+                            t: i + 1
+                        });
                     }
                     break;
                 case 37:
@@ -75,78 +102,138 @@ class MD extends Component {
     }
 
     md_reduce() {
-        if(this.state.t == 0 && this.state.m1Open){
+        if (this.state.t == 0 && this.state.m1Open) {
             if (this.state.M1.v > -100 && this.state.M1.v <= 100) {
-                this.setState({M1: {v: this.state.M1.v - 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M1: {
+                        v: this.state.M1.v - 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 1 && this.state.m2Open){
+        if (this.state.t == 1 && this.state.m2Open) {
             if (this.state.M2.v > -100 && this.state.M2.v <= 100) {
-                this.setState({M2: {v: this.state.M2.v - 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M2: {
+                        v: this.state.M2.v - 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 2 && this.state.m3Open){
+        if (this.state.t == 2 && this.state.m3Open) {
             if (this.state.M3.v > -100 && this.state.M3.v <= 100) {
-                this.setState({M3: {v: this.state.M3.v - 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M3: {
+                        v: this.state.M3.v - 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 3 && this.state.m4Open){
+        if (this.state.t == 3 && this.state.m4Open) {
             if (this.state.M4.v > -100 && this.state.M4.v <= 100) {
-                this.setState({M4: {v: this.state.M4.v - 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M4: {
+                        v: this.state.M4.v - 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 4 && this.state.m5Open){
+        if (this.state.t == 4 && this.state.m5Open) {
             if (this.state.M5.v > -100 && this.state.M5.v <= 100) {
-                this.setState({M5: {v: this.state.M5.v - 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M5: {
+                        v: this.state.M5.v - 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
 
     }
 
     md_increase() {
-        if(this.state.t == 0 && this.state.m1Open){
+        if (this.state.t == 0 && this.state.m1Open) {
             if (this.state.M1.v >= -100 && this.state.M1.v < 100) {
-                this.setState({M1: {v: this.state.M1.v + 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M1: {
+                        v: this.state.M1.v + 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 1 && this.state.m2Open){
+        if (this.state.t == 1 && this.state.m2Open) {
             if (this.state.M2.v >= -100 && this.state.M2.v < 100) {
-                this.setState({M2: {v: this.state.M2.v + 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M2: {
+                        v: this.state.M2.v + 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 2 && this.state.m3Open){
+        if (this.state.t == 2 && this.state.m3Open) {
             if (this.state.M3.v >= -100 && this.state.M3.v < 100) {
-                this.setState({M3: {v: this.state.M3.v + 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M3: {
+                        v: this.state.M3.v + 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 3 && this.state.m4Open){
+        if (this.state.t == 3 && this.state.m4Open) {
             if (this.state.M4.v >= -100 && this.state.M4.v < 100) {
-                this.setState({M4: {v: this.state.M4.v + 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M4: {
+                        v: this.state.M4.v + 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
-        if(this.state.t == 4 && this.state.m5Open){
+        if (this.state.t == 4 && this.state.m5Open) {
             if (this.state.M5.v >= -100 && this.state.M5.v < 100) {
-                this.setState({M5: {v: this.state.M5.v + 1, val: Math.round(Math.random()*10)}});
+                this.setState({
+                    M5: {
+                        v: this.state.M5.v + 1,
+                        val: Math.round(Math.random() * 10)
+                    }
+                });
             }
         }
     }
 
 
     onClick(str) {
-        if(str == 'm1'){
-            this.setState({m1Open: !this.state.m1Open});
+        if (str == 'm1') {
+            this.setState({
+                m1Open: !this.state.m1Open
+            });
         }
-        if(str == 'm2'){
-            this.setState({m2Open: !this.state.m2Open});
+        if (str == 'm2') {
+            this.setState({
+                m2Open: !this.state.m2Open
+            });
         }
-        if(str == 'm3'){
-            this.setState({m3Open: !this.state.m3Open});
+        if (str == 'm3') {
+            this.setState({
+                m3Open: !this.state.m3Open
+            });
         }
-        if(str == 'm4'){
-            this.setState({m4Open: !this.state.m4Open});
+        if (str == 'm4') {
+            this.setState({
+                m4Open: !this.state.m4Open
+            });
         }
-        if(str == 'm5'){
-            this.setState({m5Open: !this.state.m5Open});
+        if (str == 'm5') {
+            this.setState({
+                m5Open: !this.state.m5Open
+            });
         }
 
     }
@@ -209,5 +296,3 @@ class MD extends Component {
 }
 
 export default MD
-
-

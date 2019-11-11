@@ -56,7 +56,16 @@ class CP extends Component {
             }
         })
     }
+
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
+
     onTlyKeyDown = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $("[name='tly-a']");
         const i = _this.state.l;

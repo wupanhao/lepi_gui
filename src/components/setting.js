@@ -10,7 +10,12 @@ import czcp from '../public/images/czcp.png';
 import bbxx from '../public/images/bbxx.png';
 import Header from './header';
 import Footer from './foot';
-import { T } from 'react-toast-mobile';
+import {
+    navigation
+} from '../public/js/history';
+import {
+    T
+} from 'react-toast-mobile';
 //T.loading()
 
 // T.notify('hello toast')
@@ -40,6 +45,13 @@ class Setting extends Component {
     componentWillUnmount() {
         document.removeEventListener("keydown", this.listenSetDiv)
     }
+
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     listenSetDiv = (e) => {
         const _this = this;
         const divs = $('.s-img-l');
@@ -50,18 +62,30 @@ class Setting extends Component {
             });
         }
         if (e && e.keyCode) {
-            console.log('keyCode : ', e.keyCode, _this.state.cf);//81Q  87W
-            if(this.state.cf == true){
+            console.log('keyCode : ', e.keyCode, _this.state.cf); //81Q  87W
+            console.log(this.state)
+            if (this.state.cf == true) {
+                T.clear()
+                this.setState({
+                    cf: false
+                });
                 switch (e.keyCode) {
-                    case 81:
-                        _this.confirmBtn();
+                    case 72:
+                    case 13:
+                        T.confirm({
+                            // title: '标题',
+                            message: '已清楚完毕',
+                        })
+                        setTimeout(() => T.clear(), 1500)
+                        console.log('Yes')
                         break;
-                    case 87:
-                        _this.cencelBtn();
+                    case 66:
+                        console.log('No')
                         break;
                 }
 
-                }else{
+            } else {
+                this.onKeyDown(e)
                 switch (e.keyCode) {
                     case 13: //回车事件
                         const links = $('a[name="set-a"]');
@@ -106,31 +130,25 @@ class Setting extends Component {
             }
         }
     }
-    confirmBtn(){
-        alert('btn1');
-        this.setState({cf: false});
-    }
-    cencelBtn(){
-        alert('btn2')
-        this.setState({cf: false});
-    }
-    onClick(){
+    onClick() {
         const _this = this;
-        _this.setState({cf: true});
+        _this.setState({
+            cf: true
+        });
         //T.notify('hello toast')
         //T.loading()
         T.confirm({
-            title: '重置磁盘',
-            message: '是否要重置磁盘',
+            title: '清除数据',
+            message: '是否要清除数据,这将删除主机上的全部程序和用户设置项',
             option: [{
                 text: '确定',
                 fn: (e) => {
-                    console.log('e : --- ', this);
+                    console.log('点击了确定', this);
                 }
             }, {
                 text: '取消',
                 fn: (e) => {
-                    console.log('e J: ', this);
+                    console.log('点击了取消', this);
                 }
             }]
         });
@@ -151,7 +169,7 @@ class Setting extends Component {
                         <Link to="/yl" name="set-a"><img src={sy} alt=""/><div>声音</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 3 ? 'active' : ''}`}>
-                        <Link to="" name="set-a"><img src={zt} alt=""/><div>主题</div></Link>
+                        <Link name="set-a"><img src={zt} alt=""/><div>主题</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 4 ? 'active' : ''}`}>
                         {/* <Link to="/czcp" name="set-a"><img src={czcp} alt=""/><div>重置磁盘</div></Link>*/}

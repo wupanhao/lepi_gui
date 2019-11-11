@@ -1,5 +1,7 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
 class DYGL extends Component {
@@ -7,6 +9,19 @@ class DYGL extends Component {
         super(props)
         this.state = {
             i: 70,
+        }
+    }
+    componentDidMount() {
+        document.addEventListener("keydown", this.onKeyDown)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.onKeyDown)
+    }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
         }
     }
 
@@ -38,5 +53,3 @@ class DYGL extends Component {
 }
 
 export default DYGL
-
-

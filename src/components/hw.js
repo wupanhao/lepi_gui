@@ -1,8 +1,10 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
-import $ from  'jquery';
+import $ from 'jquery';
 
 class HW extends Component {
     constructor(props) {
@@ -11,8 +13,22 @@ class HW extends Component {
             gz: 1243123,
             fz: 1342312,
             i: -1,
-            data: [{gz: 1243123, fz: 1342312}, {gz: 111111, fz: 121212}, {gz: 222222, fz: 232323},
-                {gz: 333333, fz: 343434},{gz: 444444, fz: 454545}]
+            data: [{
+                gz: 1243123,
+                fz: 1342312
+            }, {
+                gz: 111111,
+                fz: 121212
+            }, {
+                gz: 222222,
+                fz: 232323
+            }, {
+                gz: 333333,
+                fz: 343434
+            }, {
+                gz: 444444,
+                fz: 454545
+            }]
         }
 
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -30,10 +46,18 @@ class HW extends Component {
         document.removeEventListener("keydown", this.listenHwDiv)
     }
 
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     onClick() {
         const data = this.state.data;
         let i = this.state.i;
-        if(i == -1){i = 0;}
+        if (i == -1) {
+            i = 0;
+        }
         this.setState({
             gz: data[i].gz,
             fz: data[i].fz
@@ -41,6 +65,7 @@ class HW extends Component {
     }
 
     listenHwDiv = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.p-text-span');
         const i = _this.state.i;
@@ -103,5 +128,3 @@ class HW extends Component {
 }
 
 export default HW
-
-

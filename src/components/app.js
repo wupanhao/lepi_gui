@@ -2,7 +2,9 @@ import React from 'react';
 import {
     Component
 } from 'react';
-import Toast , { T } from 'react-toast-mobile';
+import Toast, {
+    T
+} from 'react-toast-mobile';
 import 'react-toast-mobile/lib/react-toast-mobile.css';
 import Main from './main';
 import Test from './test';
@@ -31,17 +33,21 @@ import {
     Switch
 } from "react-router-dom";
 
-import ros_client from './ros'
 
+import {
+    navigation
+} from '../public/js/history';
 
 class App extends Component {
     constructor(props) {
         super(props)
-
+        console.log('did this exec one time')
+        document.navigation = navigation
     }
 
     componentDidMount() {
         console.log('app.js componentDidMount')
+
         /*
         this.ros = new ros_client('ws://192.168.50.150:9090')
         this.ros.conectToRos(() => {
@@ -49,11 +55,13 @@ class App extends Component {
             document.ros = this.ros
         })
         */
-
     }
     componentWillUnmount() {
         console.log('app.js componentWillUnmount')
     }
+
+
+
     render() {
         return (
             <div>

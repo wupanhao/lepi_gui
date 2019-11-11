@@ -144,8 +144,8 @@ electron.app.on('ready', () => {
     debuglog('Listening on http://localhost:8000');
     ros.conectToRos(() => {
       console.log('connected to ros')
-      createWindow()
     })
+    createWindow()
 
     // createScratchWindow()
   });

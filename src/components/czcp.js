@@ -3,40 +3,24 @@ import {
     Component
 } from 'react';
 import Header from './header';
-import history from '../public/js/history';
+import {
+    history,
+    navigation
+} from '../public/js/history';
 import $ from 'jquery';
 
 class CZCP extends Component {
     constructor(props) {
         super(props)
-        this.onClick = this.onClick.bind(this);
-        this.goBack = this.goBack.bind(this);
     }
     componentDidMount() {
-        document.addEventListener("keydown", this.onYlKeyDown)
+        // document.addEventListener("keydown", this.onYlKeyDown)
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.onYlKeyDown)
+        // document.removeEventListener("keydown", this.onYlKeyDown)
     }
-    onYlKeyDown = (e) => {
-        if (e && e.keyCode) {
-            switch (e.keyCode) {
-                case 66: //返回 B
-                    $('#czcp-back')[0].click();
-                    break;
-                case 13: //确定 回车键
-                    $('#czcp-go')[0].click();
-                    break;
-            }
-        }
-    }
-    onClick() {
-        //确定事件处理
-    }
-    goBack() {
-        history.goBack(-1)
-    }
+
     render() {
         return (
             <div>

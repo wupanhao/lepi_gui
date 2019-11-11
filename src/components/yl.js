@@ -1,5 +1,7 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
 class YL extends Component {
@@ -20,10 +22,17 @@ class YL extends Component {
     componentWillUnmount() {
         document.removeEventListener("keydown", this.onYlKeyDown)
     }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     onYlKeyDown = (e) => {
+        this.onKeyDown(e)
         const _this = this;
-        if(e && e.keyCode){
-            switch(e.keyCode) {
+        if (e && e.keyCode) {
+            switch (e.keyCode) {
                 case 37:
                     _this.reduce();
                     break;
@@ -35,13 +44,17 @@ class YL extends Component {
     }
     reduce() {
         if (this.state.i > 0) {
-            this.setState({i: this.state.i - 1});
+            this.setState({
+                i: this.state.i - 1
+            });
         }
     }
 
     increase() {
         if (this.state.i < 100) {
-            this.setState({i: this.state.i + 1});
+            this.setState({
+                i: this.state.i + 1
+            });
         }
     }
 
@@ -80,5 +93,3 @@ class YL extends Component {
 }
 
 export default YL
-
-

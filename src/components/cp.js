@@ -1,10 +1,12 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
 import y1 from '../public/images/y1.png';
 import y2 from '../public/images/y2.png';
-import $ from  'jquery';
+import $ from 'jquery';
 
 class CP extends Component {
     constructor(props) {
@@ -18,14 +20,21 @@ class CP extends Component {
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
     }
-    componentDidMount(){
+    componentDidMount() {
         document.addEventListener("keydown", this.listenCPDiv)
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         document.removeEventListener("keydown", this.listenCPDiv)
     }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     listenCPDiv = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.sel-btn');
         const i = _this.state.t;
@@ -34,9 +43,9 @@ class CP extends Component {
                 t: 0
             });
         }
-        if(e && e.keyCode){
+        if (e && e.keyCode) {
             console.log('keyCode : ', e.keyCode);
-            switch(e.keyCode) {
+            switch (e.keyCode) {
                 case 13:
                     _this.onClick();
                     break;
@@ -60,7 +69,9 @@ class CP extends Component {
 
     }
     onClick() {
-        this.setState({isClick: !this.state.isClick});
+        this.setState({
+            isClick: !this.state.isClick
+        });
     }
 
     render() {
@@ -86,5 +97,3 @@ class CP extends Component {
 }
 
 export default CP
-
-

@@ -1,8 +1,10 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
-import $ from  'jquery';
+import $ from 'jquery';
 
 class CSB extends Component {
     constructor(props) {
@@ -19,19 +21,30 @@ class CSB extends Component {
         this.onClick = this.onClick.bind(this);
 
     }
-    componentDidMount(){
+    componentDidMount() {
         document.addEventListener("keydown", this.listenCsbDiv)
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         document.removeEventListener("keydown", this.listenCsbDiv)
     }
+
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
+
     onClick() {
         const data = this.state.data;
         const i = this.state.i;
-        this.setState({val: data[i] || ''});
+        this.setState({
+            val: data[i] || ''
+        });
     }
     listenCsbDiv = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.p-text-span');
         const i = _this.state.i;
@@ -40,9 +53,9 @@ class CSB extends Component {
                 i: 0
             });
         }
-        if(e && e.keyCode){
+        if (e && e.keyCode) {
             // console.log('keyCode : ', e.keyCode);
-            switch(e.keyCode) {
+            switch (e.keyCode) {
                 case 13:
                     _this.onClick();
                     break;
@@ -94,5 +107,3 @@ class CSB extends Component {
 }
 
 export default CSB
-
-

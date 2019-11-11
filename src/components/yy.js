@@ -1,8 +1,10 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
-import $ from  'jquery';
+import $ from 'jquery';
 
 class YY extends Component {
     constructor(props) {
@@ -24,39 +26,57 @@ class YY extends Component {
         document.removeEventListener("keydown", this.onYyKeyDown)
     }
 
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
+
     onYyKeyDown = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.s-lan-l');
         const i = _this.state.a;
         if (i === -1) {
-            _this.setState({a: 0});
+            _this.setState({
+                a: 0
+            });
         }
         if (e && e.keyCode) {
             switch (e.keyCode) {
-                case 13://回车事件
-                   //执行选择语言操作
+                case 13: //回车事件
+                    //执行选择语言操作
                     /*if (i === -1) {
                         _this.setState({a: 0});
                     }*/
                     break;
                 case 38:
                     if (i - 2 >= 0 && i - 2 < divs.length) {
-                        _this.setState({a: i - 2});
+                        _this.setState({
+                            a: i - 2
+                        });
                     }
                     break;
                 case 40:
                     if (i >= 0 && i + 2 < divs.length) {
-                        _this.setState({a: i + 2});
+                        _this.setState({
+                            a: i + 2
+                        });
                     }
                     break;
                 case 37:
                     if (i >= 1 && i - 1 < divs.length) {
-                        _this.setState({a: i - 1});
+                        _this.setState({
+                            a: i - 1
+                        });
                     }
                     break;
                 case 39:
                     if (i >= 0 && i + 1 < divs.length) {
-                        _this.setState({a: i + 1});
+                        _this.setState({
+                            a: i + 1
+                        });
                     }
                     break;
             }
@@ -94,5 +114,3 @@ class YY extends Component {
 }
 
 export default YY
-
-

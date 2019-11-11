@@ -1,10 +1,15 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import bt1 from '../public/images/bt1.png';
 import bt2 from '../public/images/bt2.png';
-import history from '../public/js/history';
-import $ from  'jquery';
+import {
+    history,
+    navigation
+} from '../public/js/history';
+import $ from 'jquery';
 
 class LY extends Component {
     constructor(props) {
@@ -33,17 +38,26 @@ class LY extends Component {
         document.removeEventListener("keydown", this.onLyKeyDown)
     }
 
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     onLyKeyDown = (e) => {
+        this.onKeyDown(e)
         // console.log('keyCode : ', e.keyCode);
         const _this = this;
         const divs = $('[name="ly"]');
         const i = _this.state.i;
         if (i === -1 && !_this.state.isOpen) {
-            _this.setState({i: 0});
+            _this.setState({
+                i: 0
+            });
         }
         if (e && e.keyCode) {
             switch (e.keyCode) {
-                case 13://回车事件
+                case 13: //回车事件
                     if (_this.state.isOpen) {
                         const links = $('a[name="li-a"]');
                         if (links.length > 0 && i != -1 && i != 0) {
@@ -54,24 +68,28 @@ class LY extends Component {
                         _this.onClick();
                     }
                     break;
-                case 38://上
+                case 38: //上
                     if (_this.state.isOpen) {
                         if (i - 1 >= 0 && i - 1 < divs.length) {
-                            _this.setState({i: i - 1});
+                            _this.setState({
+                                i: i - 1
+                            });
                         }
                     }
                     break;
-                case 40://下
+                case 40: //下
                     if (_this.state.isOpen) {
                         if (i >= 0 && i + 1 < divs.length) {
-                            _this.setState({i: i + 1});
+                            _this.setState({
+                                i: i + 1
+                            });
                         }
                     }
                     break;
-                case 66://B, 返回
+                case 66: //B, 返回
                     $('#li-back')[0].click();
                     break;
-                case 72://H， home
+                case 72: //H， home
                     $('#ly-check')[0].click();
                     break;
             }
@@ -79,7 +97,9 @@ class LY extends Component {
     }
 
     onClick() {
-        this.setState({isOpen: !this.state.isOpen});
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
     }
 
     goBack() {
@@ -87,7 +107,9 @@ class LY extends Component {
     }
 
     onSelected(devId) {
-        this.setState({deviceId: devId})
+        this.setState({
+            deviceId: devId
+        })
     }
 
     onChecked() {
@@ -142,5 +164,3 @@ class LY extends Component {
 }
 
 export default LY
-
-

@@ -1,7 +1,9 @@
 import React from 'react';
-import {Component} from 'react';
-import history from '../public/js/history';
-import $ from  'jquery';
+import {
+    Component
+} from 'react';
+
+import $ from 'jquery';
 
 import {
     Link
@@ -9,37 +11,21 @@ import {
 class Foot extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
-        this.goBack = this.goBack.bind(this);
+        this.state = {}
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.onFootKeyDown = this.onFootKeyDown.bind(this);
+
     }
     componentDidMount() {
-        document.addEventListener("keydown", this.onFootKeyDown)
+        // document.addEventListener("keydown", this.onKeyDown)
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.onFootKeyDown)
+        // document.removeEventListener("keydown", this.onKeyDown)
     }
-    goBack(){
-        history.goBack(-1)
-    }
-    onFootKeyDown = (e) => {
-        const _this = this;
-        if(e && e.keyCode) {
-            switch (e.keyCode) {
-                case 66:// 'B' 66，返回
-                    _this.goBack();
-                    break;
-                case 72://'H'   对应Home键
-                    $('a[name="jslp-home"]')[0].click();
-                    break;
-            }
-        }
 
-    }
+
+
     render() {
         return (
             <div className="s-bottom">
@@ -51,5 +37,3 @@ class Foot extends Component {
 }
 
 export default Foot
-
-

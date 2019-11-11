@@ -1,5 +1,7 @@
 import React from 'react';
-import {Component} from 'react';
+import {
+    Component
+} from 'react';
 import Header from './header';
 import Footer from './foot';
 import mkf1 from '../public/images/mkf1.png';
@@ -35,11 +37,15 @@ class MKF extends Component {
         } else {
             //计时器
             this.timer = setInterval(() => {
-                this.setState({time: ++this.state.time})
+                this.setState({
+                    time: ++this.state.time
+                })
             }, 1000)
         }
         //改变开始、暂停状态
-        this.setState({on: !this.state.on})
+        this.setState({
+            on: !this.state.on
+        })
     }
     startClick = () => {
         if (this.state.on) {
@@ -47,36 +53,52 @@ class MKF extends Component {
         } else {
             //计时器
             this.timer = setInterval(() => {
-                this.setState({time: ++this.state.time})
+                this.setState({
+                    time: ++this.state.time
+                })
             }, 1000)
         }
         //改变开始、暂停状态
-        this.setState({on: !this.state.on})
+        this.setState({
+            on: !this.state.on
+        })
     }
     endClick = () => {
-        this.setState({on: !this.state.on})
+        this.setState({
+            on: !this.state.on
+        })
         clearInterval(this.timer);
     }
 
     //重置
-    handleReset =  ()=> {
-        this.setState({time:0, on: false});
+    handleReset = () => {
+        this.setState({
+            time: 0,
+            on: false
+        });
         clearInterval(this.timer);
     }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     onMkfKeyDown = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         if (e && e.keyCode) {
             switch (e.keyCode) {
-                case 38://'ArrowUp': 38  ，暂停
+                case 38: //'ArrowUp': 38  ，暂停
                     _this.handleClick();
                     break;
-                case 40://'ArrowDown': 40 ，重置
+                case 40: //'ArrowDown': 40 ，重置
                     _this.handleReset();
                     break;
                 case 37: //'ArrowLeft': 37
                     _this.startClick();
                     break;
-                case 39:// 'ArrowRight': 39
+                case 39: // 'ArrowRight': 39
                     _this.endClick();
                     break;
             }
@@ -85,8 +107,8 @@ class MKF extends Component {
 
     render() {
         const time = this.state.time;
-        const mm = parseInt(time/60) > 9 ? parseInt(time/60) : '0'+parseInt(time/60);
-        const ss = parseInt(time%60) > 9 ? parseInt(time%60) : '0'+parseInt(time%60);
+        const mm = parseInt(time / 60) > 9 ? parseInt(time / 60) : '0' + parseInt(time / 60);
+        const ss = parseInt(time % 60) > 9 ? parseInt(time % 60) : '0' + parseInt(time % 60);
 
         return (
             <div>
@@ -102,5 +124,3 @@ class MKF extends Component {
 }
 
 export default MKF
-
-

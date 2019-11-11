@@ -33,7 +33,14 @@ class Test extends Component {
     componentWillUnmount() {
         document.removeEventListener("keydown", this.listenTestDiv)
     }
+    onKeyDown(e) {
+        const navigation = document.navigation
+        if (navigation && navigation(e)) {
+            return
+        }
+    }
     listenTestDiv = (e) => {
+        this.onKeyDown(e)
         const _this = this;
         const divs = $('.s-img-l');
         const i = _this.state.t;
