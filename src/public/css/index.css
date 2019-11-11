@@ -72,14 +72,13 @@ html body a:link{
   width: 55px;
   height: 55px;
   border-radius: 14px;
-  position:absolute;
 }
 .s-img-l div {
   width: 55px;
   font-size: 13px;
   color: #ffffff;
   text-align: center;
-  margin-top: 58px;
+  margin-top: -2px;
 }
 .pl-img-l {
  /* float: left;
@@ -505,6 +504,20 @@ html body a:link{
   width: 90%;
   text-align: center;
 }
+.wifi-down-li{
+  height: 21px;
+  border-radius: 5px;
+  line-height: 21px;
+  padding: 3px;
+  margin-bottom: 3px;
+  width: 90%;
+  text-align: left;
+}
+.wifi-down-li img{
+  width: 12px;
+  height:12px;
+  margin: 0px 10px;
+}
 .li-active {
   background:linear-gradient(left,#b7ccf9,#78a8f7);
 }
@@ -548,6 +561,12 @@ html body a:link{
 .ly-r img{
   width: 50px;
   height: 22px;
+}
+.md-r {
+}
+.md-r img{
+  width: 20px;
+  height: 10px;
 }
 .s-czcp {
   width: 100%;
@@ -675,4 +694,10 @@ html body a:link{
   font-size: 13px;
   padding: 5px;
   margin: 0px 5px;
+}
+.modal {
+  width: 80%;
+}
+.modal-content-wrap {
+  padding: 10px 15px;
 }

@@ -10,6 +10,11 @@ import czcp from '../public/images/czcp.png';
 import bbxx from '../public/images/bbxx.png';
 import Header from './header';
 import Footer from './foot';
+import { T } from 'react-toast-mobile';
+//T.loading()
+
+// T.notify('hello toast')
+
 import {
     Link
 } from 'react-router-dom';
@@ -20,20 +25,22 @@ class Setting extends Component {
         super(props)
         this.state = {
             s: -1,
+            cf: false
         }
-        this.listenTestDiv = this.listenTestDiv.bind(this);
+        this.listenSetDiv = this.listenSetDiv.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.onClick = this.onClick.bind(this);
 
     }
     componentDidMount() {
-        document.addEventListener("keydown", this.listenTestDiv)
+        document.addEventListener("keydown", this.listenSetDiv)
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.listenTestDiv)
+        document.removeEventListener("keydown", this.listenSetDiv)
     }
-    listenTestDiv = (e) => {
+    listenSetDiv = (e) => {
         const _this = this;
         const divs = $('.s-img-l');
         const i = _this.state.s;
@@ -43,48 +50,90 @@ class Setting extends Component {
             });
         }
         if (e && e.keyCode) {
-            switch (e.keyCode) {
-                case 13: //回车事件
-                    const links = $('a[name="set-a"]');
-                    if (links.length > 0 && i != -1) {
-                        links[this.state.s] ? links[this.state.s].click() : null;
-                    }
-                    /* if (i === -1) {
+            console.log('keyCode : ', e.keyCode, _this.state.cf);//81Q  87W
+            if(this.state.cf == true){
+                switch (e.keyCode) {
+                    case 81:
+                        _this.confirmBtn();
+                        break;
+                    case 87:
+                        _this.cencelBtn();
+                        break;
+                }
+
+                }else{
+                switch (e.keyCode) {
+                    case 13: //回车事件
+                        const links = $('a[name="set-a"]');
+                        if (links.length > 0 && i != -1) {
+                            links[this.state.s] ? links[this.state.s].click() : null;
+                        }
+                        /* if (i === -1) {
                          _this.setState({
-                             s: 0
+                         s: 0
                          });
-                     }*/
-                    break;
-                case 38:
-                    if (i - 2 >= 0 && i - 2 < divs.length) {
-                        _this.setState({
-                            s: i - 2
-                        });
-                    }
-                    break;
-                case 40:
-                    if (i >= 0 && i + 2 < divs.length) {
-                        _this.setState({
-                            s: i + 2
-                        });
-                    }
-                    break;
-                case 37:
-                    if (i >= 1 && i - 1 < divs.length) {
-                        _this.setState({
-                            s: i - 1
-                        });
-                    }
-                    break;
-                case 39:
-                    if (i >= 0 && i + 1 < divs.length) {
-                        _this.setState({
-                            s: i + 1
-                        });
-                    }
-                    break;
+                         }*/
+                        break;
+                    case 38:
+                        if (i - 2 >= 0 && i - 2 < divs.length) {
+                            _this.setState({
+                                s: i - 2
+                            });
+                        }
+                        break;
+                    case 40:
+                        if (i >= 0 && i + 2 < divs.length) {
+                            _this.setState({
+                                s: i + 2
+                            });
+                        }
+                        break;
+                    case 37:
+                        if (i >= 1 && i - 1 < divs.length) {
+                            _this.setState({
+                                s: i - 1
+                            });
+                        }
+                        break;
+                    case 39:
+                        if (i >= 0 && i + 1 < divs.length) {
+                            _this.setState({
+                                s: i + 1
+                            });
+                        }
+                        break;
+                }
             }
         }
+    }
+    confirmBtn(){
+        alert('btn1');
+        this.setState({cf: false});
+    }
+    cencelBtn(){
+        alert('btn2')
+        this.setState({cf: false});
+    }
+    onClick(){
+        const _this = this;
+        _this.setState({cf: true});
+        //T.notify('hello toast')
+        //T.loading()
+        T.confirm({
+            title: '重置磁盘',
+            message: '是否要重置磁盘',
+            option: [{
+                text: '确定',
+                fn: (e) => {
+                    console.log('e : --- ', this);
+                }
+            }, {
+                text: '取消',
+                fn: (e) => {
+                    console.log('e J: ', this);
+                }
+            }]
+        });
     }
 
     render() {
@@ -105,7 +154,8 @@ class Setting extends Component {
                         <Link to="" name="set-a"><img src={zt} alt=""/><div>主题</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 4 ? 'active' : ''}`}>
-                        <Link to="/czcp" name="set-a"><img src={czcp} alt=""/><div>重置磁盘</div></Link>
+                        {/* <Link to="/czcp" name="set-a"><img src={czcp} alt=""/><div>重置磁盘</div></Link>*/}
+                        <a name="set-a" onClick={() => this.onClick()} ><img src={czcp} alt=""/><div>重置磁盘</div></a>
                     </div>
                     <div className={`s-img-l ${this.state.s === 5 ? 'active' : ''}`}>
                         <Link to="/bbxx" name="set-a"><img src={bbxx} alt=""/><div>主机信息</div></Link>

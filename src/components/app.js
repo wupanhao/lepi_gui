@@ -2,6 +2,8 @@ import React from 'react';
 import {
     Component
 } from 'react';
+import Toast , { T } from 'react-toast-mobile';
+import 'react-toast-mobile/lib/react-toast-mobile.css';
 import Main from './main';
 import Test from './test';
 import Setting from './setting';
@@ -55,6 +57,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <Toast />
                 <HashRouter>
                     <Switch>
                         <Route exact path="/" component={Main}/>

@@ -3,6 +3,8 @@ import {Component} from 'react';
 import Header from './header';
 import Footer from './foot';
 import $ from  'jquery';
+import bt1 from '../public/images/bt1.png';
+import bt2 from '../public/images/bt2.png';
 
 class MD extends Component {
     constructor(props) {
@@ -13,7 +15,12 @@ class MD extends Component {
             M2: {v: 0, val: 0},
             M3: {v: 0, val: 0},
             M4: {v: 0, val: 0},
-            M5: {v: 0, val: 0}
+            M5: {v: 0, val: 0},
+            m1Open: false,
+            m2Open: false,
+            m3Open: false,
+            m4Open: false,
+            m5Open: false
         }
         this.onClick = this.onClick.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -41,8 +48,10 @@ class MD extends Component {
             switch (e.keyCode) {
                 case 13: //回车事件
                     const links = $('.t_td');
+                    const divAs = $('.md-r');
                     if (links.length > 0 && i != -1) {
                         links[this.state.t] ? links[this.state.t].click() : null;
+                        divAs[this.state.t] ? divAs[this.state.t].click() : null;
                     }
                     break;
                 case 38://上
@@ -66,27 +75,27 @@ class MD extends Component {
     }
 
     md_reduce() {
-        if(this.state.t == 0){
+        if(this.state.t == 0 && this.state.m1Open){
             if (this.state.M1.v > -100 && this.state.M1.v <= 100) {
                 this.setState({M1: {v: this.state.M1.v - 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 1){
+        if(this.state.t == 1 && this.state.m2Open){
             if (this.state.M2.v > -100 && this.state.M2.v <= 100) {
                 this.setState({M2: {v: this.state.M2.v - 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 2){
+        if(this.state.t == 2 && this.state.m3Open){
             if (this.state.M3.v > -100 && this.state.M3.v <= 100) {
                 this.setState({M3: {v: this.state.M3.v - 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 3){
+        if(this.state.t == 3 && this.state.m4Open){
             if (this.state.M4.v > -100 && this.state.M4.v <= 100) {
                 this.setState({M4: {v: this.state.M4.v - 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 4){
+        if(this.state.t == 4 && this.state.m5Open){
             if (this.state.M5.v > -100 && this.state.M5.v <= 100) {
                 this.setState({M5: {v: this.state.M5.v - 1, val: Math.round(Math.random()*10)}});
             }
@@ -95,27 +104,27 @@ class MD extends Component {
     }
 
     md_increase() {
-        if(this.state.t == 0){
+        if(this.state.t == 0 && this.state.m1Open){
             if (this.state.M1.v >= -100 && this.state.M1.v < 100) {
                 this.setState({M1: {v: this.state.M1.v + 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 1){
+        if(this.state.t == 1 && this.state.m2Open){
             if (this.state.M2.v >= -100 && this.state.M2.v < 100) {
                 this.setState({M2: {v: this.state.M2.v + 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 2){
+        if(this.state.t == 2 && this.state.m3Open){
             if (this.state.M3.v >= -100 && this.state.M3.v < 100) {
                 this.setState({M3: {v: this.state.M3.v + 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 3){
+        if(this.state.t == 3 && this.state.m4Open){
             if (this.state.M4.v >= -100 && this.state.M4.v < 100) {
                 this.setState({M4: {v: this.state.M4.v + 1, val: Math.round(Math.random()*10)}});
             }
         }
-        if(this.state.t == 4){
+        if(this.state.t == 4 && this.state.m5Open){
             if (this.state.M5.v >= -100 && this.state.M5.v < 100) {
                 this.setState({M5: {v: this.state.M5.v + 1, val: Math.round(Math.random()*10)}});
             }
@@ -123,8 +132,23 @@ class MD extends Component {
     }
 
 
-    onClick() {
-        this.setState({isClick: !this.state.isClick});
+    onClick(str) {
+        if(str == 'm1'){
+            this.setState({m1Open: !this.state.m1Open});
+        }
+        if(str == 'm2'){
+            this.setState({m2Open: !this.state.m2Open});
+        }
+        if(str == 'm3'){
+            this.setState({m3Open: !this.state.m3Open});
+        }
+        if(str == 'm4'){
+            this.setState({m4Open: !this.state.m4Open});
+        }
+        if(str == 'm5'){
+            this.setState({m5Open: !this.state.m5Open});
+        }
+
     }
 
     render() {
@@ -135,32 +159,43 @@ class MD extends Component {
                     <table className="s_table" rules="none">
                         <tbody>
                         <tr>
+                            <th>开/关</th>
                             <th>端口</th>
                             <th>速度</th>
                             <th>编码器</th>
                         </tr>
                         <tr className={`s_table_tr ${this.state.t === 0 ? 'active' : ''}`}>
-                            <th>M1</th>
+                            <td><div><a className="md-r" onClick={() => this.onClick('m1')}><img
+                                src={this.state.m1Open ? bt1 : bt2} alt=""/></a></div></td>
+                            <td>M1</td>
                             <td className="t_td">{this.state.M1.v}</td>
                             <td>{this.state.M1.val}</td>
                         </tr>
                         <tr class={`s_table_tr ${this.state.t === 1 ? 'active' : ''}`}>
-                            <th>M2</th>
+                            <td><div><a className="md-r" onClick={() => this.onClick('m2')}><img
+                                src={this.state.m2Open ? bt1 : bt2} alt=""/></a></div></td>
+                            <td>M2</td>
                             <td className="t_td">{this.state.M2.v}</td>
                             <td>{this.state.M2.val}</td>
                         </tr>
                         <tr class={`s_table_tr ${this.state.t === 2 ? 'active' : ''}`}>
-                            <th>M3</th>
+                            <td><div><a className="md-r" onClick={() => this.onClick('m3')}><img
+                                src={this.state.m3Open ? bt1 : bt2} alt=""/></a></div></td>
+                            <td>M3</td>
                             <td className="t_td">{this.state.M3.v}</td>
                             <td>{this.state.M3.val}</td>
                         </tr>
                         <tr class={`s_table_tr ${this.state.t === 3 ? 'active' : ''}`}>
-                            <th>M4</th>
+                            <td><div><a className="md-r" onClick={() => this.onClick('m4')}><img
+                                src={this.state.m4Open ? bt1 : bt2} alt=""/></a></div></td>
+                            <td>M4</td>
                             <td className="t_td">{this.state.M4.v}</td>
                             <td>{this.state.M4.val}</td>
                         </tr>
                         <tr class={`s_table_tr ${this.state.t === 4 ? 'active' : ''}`}>
-                            <th>M5</th>
+                            <td><div><a className="md-r" onClick={() => this.onClick('m5')}><img
+                                src={this.state.m5Open ? bt1 : bt2} alt=""/></a></div></td>
+                            <td>M5</td>
                             <td className="t_td">{this.state.M5.v}</td>
                             <td>{this.state.M5.val}</td>
                         </tr>
