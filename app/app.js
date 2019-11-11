@@ -61,7 +61,6 @@ function onBtnEvent(message) {
 
 const RosClient = require('./router/ros')
 const ros = new RosClient(env.ros_base_url, onBtnEvent)
-ros.conectToRos()
 
 app.get('/hide_scratch_window', (req, res) => {
   hideScratchWindow()
@@ -136,7 +135,11 @@ if (os.platform() === 'linux') {
 electron.app.on('ready', () => {
   server.listen(8000, () => {
     debuglog('Listening on http://localhost:8000');
-    createWindow()
+    ros.conectToRos(() => {
+      console.log('connected to ros')
+      createWindow()
+    })
+
     // createScratchWindow()
   });
 })

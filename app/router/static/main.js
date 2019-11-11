@@ -4,7 +4,7 @@ const {
 } = require('electron')
 var ros = remote.getGlobal('ros')
 
-// document.ros = ros
+document.ros = ros
 
 ipcRenderer.on('key-event', (event, message) => {
 	console.log(event, message)

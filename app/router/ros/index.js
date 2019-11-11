@@ -21,7 +21,7 @@ class ros_client {
       console.log('trying to reconect after 3 seconds')
       // return
       setTimeout(() => {
-        this.conectToRos()
+        this.conectToRos(callback)
       }, 3000)
       return
     }
@@ -51,18 +51,16 @@ class ros_client {
     ros.on('close', () => {
       console.log('Connection to websocket server closed. retrying after 3 seconds');
       setTimeout(() => {
-        this.conectToRos()
+        this.conectToRos(callback)
       }, 3000)
     });
 
     this.ros = ros
     this.listener = listener
   }
-
   isConnected() {
     return this.ros && this.ros.isConnected
   }
-
   getMotorEncoder(port) {
     return new Promise((resolve) => {
       var client = new ROSLIB.Service({
@@ -155,22 +153,25 @@ class ros_client {
       });
     })
   }
-  getMotorsInfo() {
+  get3AxesData(id) {
     return new Promise((resolve) => {
       var client = new ROSLIB.Service({
         ros: this.ros,
-        name: ROS_NAMESPACE + 'pi_driver_node/motors_get_info',
-        serviceType: 'pi_driver/GetMotorsInfo'
+        name: ROS_NAMESPACE + 'pi_driver_node/senser_get_3axes',
+        serviceType: 'pi_driver/SensorGet3Axes'
       });
 
-      var request = new ROSLIB.ServiceRequest();
+      var request = new ROSLIB.ServiceRequest({
+        id: id
+      });
 
       client.callService(request, (result) => {
         console.log(result)
-        resolve(result)
+        resolve(result.data)
       });
     })
   }
+
   getPowerState() {
     return new Promise((resolve) => {
       var client = new ROSLIB.Service({
@@ -182,7 +183,7 @@ class ros_client {
       var request = new ROSLIB.ServiceRequest();
 
       client.callService(request, (result) => {
-        console.log(result)
+        // console.log(result)
         resolve(result)
       });
     })

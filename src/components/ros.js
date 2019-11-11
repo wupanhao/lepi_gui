@@ -21,7 +21,7 @@ class ros_client {
       console.log('trying to reconect after 3 seconds')
       // return
       setTimeout(() => {
-        this.conectToRos()
+        this.conectToRos(callback)
       }, 3000)
       return
     }
@@ -51,7 +51,7 @@ class ros_client {
     ros.on('close', () => {
       console.log('Connection to websocket server closed. retrying after 3 seconds');
       setTimeout(() => {
-        this.conectToRos()
+        this.conectToRos(callback)
       }, 3000)
     });
 
