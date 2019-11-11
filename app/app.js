@@ -94,10 +94,16 @@ const server = createServer(app);
 
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
+const globalShortcut = electron.globalShortcut
 
 global.ros = ros
 
 function createWindow() {
+
+  globalShortcut.register('ESC', () => {
+    mainWindow.setFullScreen(false);
+  })
+
   mainWindow = new BrowserWindow({
     width: 240,
     height: 320,
@@ -125,6 +131,7 @@ function createWindow() {
   // mainWindow.loadURL('http://localhost:8000/index')
   mainWindow.loadURL(env.index_base_url)
   //mainWindow.loadURL('http://localhost:3000')
+  mainWindow.setFullScreen(true);
   console.log(mainWindow)
 }
 
@@ -135,10 +142,12 @@ if (os.platform() === 'linux') {
 electron.app.on('ready', () => {
   server.listen(8000, () => {
     debuglog('Listening on http://localhost:8000');
+    createWindow()
+    /*
     ros.conectToRos(() => {
       console.log('connected to ros')
-      createWindow()
     })
+    */
 
     // createScratchWindow()
   });

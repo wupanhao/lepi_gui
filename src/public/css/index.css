@@ -2,8 +2,8 @@
   font-family: ziti;
   src:url('../font/SIMYOU.TTF');
 }
-html body {
-
+#root,img,div,a {
+  cursor: none;
 }
 #root {
   margin: 0px;
@@ -24,7 +24,11 @@ background-image: linear-gradient(to bottom left ,#063b63,#2996b0);
 html body a {
   color: #ffffff
 }
-html body a:link{text-decoration:none; cursor:pointer; color:#ffffff;}
+html body a:link{
+  text-decoration:none; 
+  /*cursor:pointer; */
+  color:#ffffff;
+}
 .s-header {
   width: 240px;
   height: 25px;
