@@ -29,6 +29,7 @@ import {
     Switch
 } from "react-router-dom";
 
+import ros_client from './ros'
 
 class App extends Component {
     constructor(props) {
@@ -38,6 +39,11 @@ class App extends Component {
 
     componentDidMount() {
         console.log('app.js componentDidMount')
+        this.ros = new ros_client('ws://192.168.50.150:9090')
+        this.ros.conectToRos(() => {
+            console.log('success')
+            document.ros = this.ros
+        })
 
     }
     componentWillUnmount() {

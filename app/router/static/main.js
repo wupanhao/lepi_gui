@@ -4,6 +4,8 @@ const {
 } = require('electron')
 var ros = remote.getGlobal('ros')
 
+// document.ros = ros
+
 ipcRenderer.on('key-event', (event, message) => {
 	console.log(event, message)
 	if (message.type == 1) {
@@ -16,9 +18,11 @@ ipcRenderer.on('key-event', (event, message) => {
 			// shiftKey: true
 		});
 		document.dispatchEvent(e);
+		/*
 		ros.getMotorEncoder(1).then(value => {
 			console.log(value)
 		})
+		*/
 	}
 	// document.dispatchEvent(e);
 
