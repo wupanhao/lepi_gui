@@ -6,6 +6,7 @@ class ros_client {
     this.url = ros_base_url
     this.listener = null
     this.btnHandler = btnHandler
+    this.ros = null
     // this.conectToRos()
   }
 
@@ -57,7 +58,9 @@ class ros_client {
     this.ros = ros
     this.listener = listener
   }
-
+  isConnected() {
+    return this.ros && this.ros.isConnected
+  }
   getMotorEncoder(port) {
     return new Promise((resolve) => {
       var client = new ROSLIB.Service({
@@ -150,6 +153,25 @@ class ros_client {
       });
     })
   }
+  get3AxesData(id) {
+    return new Promise((resolve) => {
+      var client = new ROSLIB.Service({
+        ros: this.ros,
+        name: ROS_NAMESPACE + 'pi_driver_node/senser_get_3axes',
+        serviceType: 'pi_driver/SensorGet3Axes'
+      });
+
+      var request = new ROSLIB.ServiceRequest({
+        id: id
+      });
+
+      client.callService(request, (result) => {
+        console.log(result)
+        resolve(result.data)
+      });
+    })
+  }
+
   getPowerState() {
     return new Promise((resolve) => {
       var client = new ROSLIB.Service({
@@ -161,7 +183,7 @@ class ros_client {
       var request = new ROSLIB.ServiceRequest();
 
       client.callService(request, (result) => {
-        console.log(result)
+        // console.log(result)
         resolve(result)
       });
     })

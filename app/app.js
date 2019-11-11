@@ -128,7 +128,11 @@ function createWindow() {
   //mainWindow.loadURL('http://localhost:3000')
   console.log(mainWindow)
 }
-// mdns.start_mdns_server()
+
+if (os.platform() === 'linux') {
+  mdns.start_mdns_server()
+}
+
 electron.app.on('ready', () => {
   server.listen(8000, () => {
     debuglog('Listening on http://localhost:8000');

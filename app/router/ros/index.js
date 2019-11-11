@@ -6,6 +6,7 @@ class ros_client {
     this.url = ros_base_url
     this.listener = null
     this.btnHandler = btnHandler
+    this.ros = null
     // this.conectToRos()
   }
 
@@ -56,6 +57,10 @@ class ros_client {
 
     this.ros = ros
     this.listener = listener
+  }
+
+  isConnected() {
+    return this.ros && this.ros.isConnected
   }
 
   getMotorEncoder(port) {
@@ -147,6 +152,22 @@ class ros_client {
       client.callService(request, (result) => {
         console.log(result)
         resolve(result.data)
+      });
+    })
+  }
+  getMotorsInfo() {
+    return new Promise((resolve) => {
+      var client = new ROSLIB.Service({
+        ros: this.ros,
+        name: ROS_NAMESPACE + 'pi_driver_node/motors_get_info',
+        serviceType: 'pi_driver/GetMotorsInfo'
+      });
+
+      var request = new ROSLIB.ServiceRequest();
+
+      client.callService(request, (result) => {
+        console.log(result)
+        resolve(result)
       });
     })
   }

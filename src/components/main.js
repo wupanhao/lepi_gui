@@ -35,9 +35,7 @@ class Main extends Component {
         document.removeEventListener("keydown", this.onKeyDown)
     }
     onKeyDown = (e) => {
-        this.ros = document.ros
-        console.log(this.ros)
-        this.ros.getPowerState().then(data => console.log(data))
+
         console.log(e)
         const _this = this;
         const divs = $('.s-main-l');
