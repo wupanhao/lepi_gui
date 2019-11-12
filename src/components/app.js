@@ -42,7 +42,15 @@ class App extends Component {
     constructor(props) {
         super(props)
         console.log('did this exec one time')
+        this.sensorStatusListener = null
+        this.sensorType = {
+            0: '传感器',
+            29: '红外传感器',
+            30: '超声波传感器'
+        }
         document.navigation = navigation
+        this.sensorStatusHandler = this.sensorStatusHandler.bind(this)
+        this.waiteForRos()
     }
 
     componentDidMount() {
@@ -60,7 +68,34 @@ class App extends Component {
         console.log('app.js componentWillUnmount')
     }
 
+    sensorStatusHandler(message) {
+        console.log('handle for sensor status change', message)
+        if (message.status == 1) {
+            T.confirm({
+                // title: '标题',
+                message: this.sensorType[message.id] + '已连接至M' + message.port + '口',
+            })
+            setTimeout(() => T.clear(), 1500)
+        } else if (message.status == -1) {
+            T.confirm({
+                // title: '标题',
+                message: this.sensorType[message.id] + '从M' + message.port + '口断开',
+            })
+            setTimeout(() => T.clear(), 1500)
+        }
+    }
 
+    waiteForRos() {
+        const ros = document.ros
+        console.log('app waiteForRos')
+        console.log(ros.isConnected())
+        if (ros && ros.isConnected()) {
+            console.log('app ros connected')
+            ros.subSensorStatusChange(this.sensorStatusHandler)
+        } else {
+            setTimeout(this.waiteForRos, 1000)
+        }
+    }
 
     render() {
         return (

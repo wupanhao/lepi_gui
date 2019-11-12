@@ -49,7 +49,7 @@ class Main extends Component {
         console.log('waiteForRos')
         console.log(ros.isConnected())
         if (ros && ros.isConnected()) {
-            console.log('connected')
+            console.log('main ros connected')
             document.addEventListener("keydown", this.onMainKeyDown)
             T.confirm({
                 // title: '标题',

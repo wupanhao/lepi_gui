@@ -5,6 +5,9 @@ const fs = require('fs')
 const wifiRouter = require('./router/wifi')
 const uploadRouter = require('./router/upload')
 const fileRouter = require('./router/file-reader')
+
+const data_dir = require('./router/scratch-runner/index').getProgramDir()
+const exec = require('child_process').exec;
 /*
 const wss = new WebSocket.Server({
   server
@@ -58,6 +61,15 @@ app.get('/index', (req, res) => {
     encoding: 'utf8'
   });
   res.send(data);
+})
+
+app.get('/clearData', (req, res) => {
+  console.log('clear data')
+  exec('rm -rf /home/pi/Programs/*')
+  res.send({
+    status: 0,
+    msg: 'ok'
+  });
 })
 
 module.exports = app

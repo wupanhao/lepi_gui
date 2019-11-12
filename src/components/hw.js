@@ -10,42 +10,59 @@ class HW extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            gz: 1243123,
-            fz: 1342312,
+            value: 0,
+            fz: 0,
             i: -1,
-            data: [{
-                gz: 1243123,
-                fz: 1342312
-            }, {
-                gz: 111111,
-                fz: 121212
-            }, {
-                gz: 222222,
-                fz: 232323
-            }, {
-                gz: 333333,
-                fz: 343434
-            }, {
-                gz: 444444,
-                fz: 454545
-            }]
+            data: {
+                port: 0,
+                id: 0,
+                value: 0
+            }
         }
 
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.listenHwDiv = this.listenHwDiv.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.updateState = this.updateState.bind(this);
 
     }
 
     componentDidMount() {
         document.addEventListener("keydown", this.listenHwDiv)
+        this.update = true
+        this.updateState()
     }
 
     componentWillUnmount() {
         document.removeEventListener("keydown", this.listenHwDiv)
+        this.update = false
     }
+    updateState() {
+        var i = this.state.i
+        if (i < 0 || i > 4) {
+            return setTimeout(this.updateState, 500)
+        }
+        var ros = document.ros
+        if (!(ros && ros.isConnected)) {
+            console.log(ros)
+            setTimeout(this.updateState, 1000)
+            return
+        }
+        // var that = this
+        ros.getSensorInfo(i + 1).then(data => {
+            console.log(data)
+            if (data.value != -101) {
+                this.setState({
+                    data: data
+                })
 
+            }
+            if (this.update) {
+                setTimeout(this.updateState, 200)
+            }
+        })
+    }
     onKeyDown(e) {
         const navigation = document.navigation
         if (navigation && navigation(e)) {
@@ -99,16 +116,16 @@ class HW extends Component {
     }
 
     render() {
+        // <div className="p-text">阈值：{this.state.fz}</div>
         return (
             <div>
                 <Header />
                 <div className="s-body">
 
                     <div className="p-center">
-                        <div className="p-text">光值：{this.state.gz}</div>
+                        <div className="p-text">{`${this.state.data.id === 29 ? '光值：'+this.state.data.value : '未连接'}`}</div>
                     </div>
                     <div className="p-bottom">
-                        <div className="p-text">阈值：{this.state.fz}</div>
                     </div>
                     <div className="">
                         <div className="p-text">

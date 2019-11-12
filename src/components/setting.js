@@ -24,6 +24,8 @@ import {
     Link
 } from 'react-router-dom';
 import $ from 'jquery';
+import axios from 'axios';
+import env from '../env';
 
 class Setting extends Component {
     constructor(props) {
@@ -72,12 +74,15 @@ class Setting extends Component {
                 switch (e.keyCode) {
                     case 72:
                     case 13:
-                        T.confirm({
-                            // title: '标题',
-                            message: '已清楚完毕',
+                        axios.get(env.api_base_url + '/clearData').then(result => {
+                            console.log(result)
+                            T.confirm({
+                                // title: '标题',
+                                message: '已清除完毕',
+                            })
+                            setTimeout(() => T.clear(), 1500)
+                            console.log('Yes')
                         })
-                        setTimeout(() => T.clear(), 1500)
-                        console.log('Yes')
                         break;
                     case 66:
                         console.log('No')
