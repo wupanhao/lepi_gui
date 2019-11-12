@@ -5,6 +5,9 @@ const fs = require('fs')
 const wifiRouter = require('./router/wifi')
 const uploadRouter = require('./router/upload')
 const fileRouter = require('./router/file-reader')
+const {
+  systemRouter,
+} = require('./router/system')
 
 const data_dir = require('./router/scratch-runner/index').getProgramDir()
 const exec = require('child_process').exec;
@@ -41,6 +44,7 @@ app.use('/static', express.static(path.join(__dirname, 'router/static')))
 app.use('/wifi', wifiRouter)
 app.use('/upload', uploadRouter)
 app.use('/getUrlList', fileRouter)
+app.use('/system', systemRouter)
 app.get('/stream_list', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Content-Type");

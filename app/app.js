@@ -9,7 +9,11 @@ const {
 const os = require('os');
 
 const mdns = require('./router/mdns')
-
+const {
+  checkCameraConnection,
+  startPiDriver,
+  startDuckService
+} = require('./router/system')
 const env = require('../env')
 
 var {
@@ -128,6 +132,21 @@ function createWindow() {
   mainWindow.on('show', () => {
     console.log('mainWindow showed')
   })
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log('did-finish-load')
+    if (os.platform() === 'linux') {
+      mdns.start_mdns_server()
+      checkCameraConnection().then(connected => {
+        if (connected) {
+          console.log('camera connected , start duck service')
+          startDuckService()
+        } else {
+          console.log('camera not connected , start pi driver')
+          startPiDriver()
+        }
+      })
+    }
+  })
   // mainWindow.loadFile('../build/index.html')
   // mainWindow.loadURL(`file://${__dirname}/scratch-runner/app.html`)
   // mainWindow.loadURL('http://localhost:8000/index')
@@ -137,9 +156,7 @@ function createWindow() {
   console.log(mainWindow)
 }
 
-if (os.platform() === 'linux') {
-  mdns.start_mdns_server()
-}
+
 
 electron.app.on('ready', () => {
   server.listen(8000, () => {
