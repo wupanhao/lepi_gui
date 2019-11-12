@@ -17,6 +17,10 @@ import $ from 'jquery';
 import {
     T
 } from 'react-toast-mobile';
+
+import axios from 'axios';
+import env from '../env';
+
 class Main extends Component {
     constructor(props) {
         super(props)
@@ -121,6 +125,8 @@ class Main extends Component {
                         });
                     }
                     break;
+                case 82:
+                    axios.get(env.api_base_url + '/show_scratch_window')
             }
         }
     }

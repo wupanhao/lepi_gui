@@ -49,7 +49,9 @@ class App extends Component {
             30: '超声波传感器'
         }
         document.navigation = navigation
+        document.T = T
         this.sensorStatusHandler = this.sensorStatusHandler.bind(this)
+        this.waiteForRos = this.waiteForRos.bind(this)
         this.waiteForRos()
     }
 
@@ -73,13 +75,13 @@ class App extends Component {
         if (message.status == 1) {
             T.confirm({
                 // title: '标题',
-                message: this.sensorType[message.id] + '已连接至M' + message.port + '口',
+                message: this.sensorType[message.id] + '已连接至S' + message.port + '口',
             })
             setTimeout(() => T.clear(), 1500)
         } else if (message.status == -1) {
             T.confirm({
                 // title: '标题',
-                message: this.sensorType[message.id] + '从M' + message.port + '口断开',
+                message: this.sensorType[message.id] + '从S' + message.port + '口断开',
             })
             setTimeout(() => T.clear(), 1500)
         }

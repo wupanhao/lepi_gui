@@ -15,12 +15,13 @@ const env = require('../env')
 var {
   runScratch,
   hideScratchWindow,
-  closeScratchWindow
+  closeScratchWindow,
+  showScratchWindow,
+  sendKeyMessage
 } = require('./router/scratch-runner/index')
 const app = require('./server')
 
 var mainWindow = null
-var scratchWindow = null
 
 const btnState = {
 
@@ -42,19 +43,19 @@ function onBtnEvent(message) {
 
   if (mainWindow.focused) {
     mainWindow.webContents.send('key-event', message);
-    if (message.value == 82 && scratchWindow != null) {
+    /*
+    if (message.value == 82 && scratchWindow != null) { // R Run
       console.log('focus scratchWindow')
-      scratchWindow.show()
+      showScratchWindow()
     }
+    */
   } else {
-    if (message.value == 66) {
+    if (message.value == 66) { // B Back
       hideScratchWindow()
       mainWindow.focus()
     } else {
-      if (scratchWindow != null) {
-        // console.log('send to scratchWindow')
-        scratchWindow.webContents.send('key-event', message);
-      }
+      // console.log('send to scratchWindow')
+      sendKeyMessage(message)
     }
   }
 }
@@ -69,21 +70,22 @@ app.get('/hide_scratch_window', (req, res) => {
   mainWindow.focus()
   console.log(mainWindow.focused)
 })
+
 app.get('/close_scratch_window', (req, res) => {
   closeScratchWindow()
-  scratchWindow = null
   res.send('close scratch window ok')
   mainWindow.focus()
+})
+
+app.get('/show_scratch_window', (req, res) => {
+  showScratchWindow()
+  res.send('show_scratch_window')
 })
 
 app.get('/run_scratch', (req, res) => {
   console.log(req.query)
   if (req.query && req.query.file_path) {
-    if (scratchWindow == null) {
-      scratchWindow = runScratch(req.query.file_path)
-    } else {
-      runScratch(req.query.file_path)
-    }
+    runScratch(req.query.file_path)
   }
   res.json({
     "status": "ok"

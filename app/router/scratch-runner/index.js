@@ -51,7 +51,15 @@ function hideScratchWindow() {
   if (scratchWindow != null) {
     scratchWindow.hide()
   } else {
-    console.log('scratchWindow not on')
+    console.log('scratchWindow not on , no need to hide')
+  }
+}
+
+function showScratchWindow() {
+  if (scratchWindow != null) {
+    scratchWindow.show()
+  } else {
+    console.log('scratchWindow not on , cannot show')
   }
 }
 
@@ -80,6 +88,12 @@ function runScratch(file_path) {
     createScratchWindow(file_path)
   }
   return scratchWindow
+}
+
+function sendKeyMessage(message) {
+  if (scratchWindow != null) {
+    scratchWindow.webContents.send('key-event', message);
+  }
 }
 
 function watchFile(save_dir) {
@@ -111,5 +125,7 @@ module.exports = {
   scratchWindow: scratchWindow,
   hideScratchWindow: hideScratchWindow,
   closeScratchWindow: closeScratchWindow,
-  watchFile: watchFile
+  showScratchWindow: showScratchWindow,
+  watchFile: watchFile,
+  sendKeyMessage: sendKeyMessage
 }

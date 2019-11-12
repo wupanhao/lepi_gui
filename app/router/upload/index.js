@@ -15,7 +15,7 @@ const router = express.Router();
 const platform = os.platform()
 
 var temp_dir = path.join(__dirname, 'temp')
-
+const save_dir = require('../scratch-runner/index').getProgramDir()
 if (platform === 'linux') {
 	temp_dir = os.tmpdir()
 }
@@ -26,7 +26,7 @@ if (!fs.existsSync(temp_dir)) {
 
 // watchFile(temp_dir)
 
-const storage = multer.diskStorage({
+const tempStorage = multer.diskStorage({
 	destination: function(req, file, cb) {
 		cb(null, temp_dir)
 	},
@@ -37,12 +37,12 @@ const storage = multer.diskStorage({
 	}
 })
 
-const upload = multer({
-	storage: storage
+const temp = multer({
+	storage: tempStorage
 });
 
 // 单文件上传
-router.post('/', upload.single('upload_file'), function(req, res, next) {
+router.post('/debug', temp.single('upload_file'), function(req, res, next) {
 	var file = req.file;
 	console.log(file)
 	res.send({
@@ -52,6 +52,30 @@ router.post('/', upload.single('upload_file'), function(req, res, next) {
 	// mainWindow.webContents.send('loadFile', {
 	//   path: file.path
 	// });
+});
+
+const saveStorage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null, save_dir)
+	},
+	filename: function(req, file, cb) {
+		// console.log(file)
+		cb(null, file.originalname)
+		// cb(null, Date.now() + '-' + file.originalname)
+	}
+})
+
+const save = multer({
+	storage: saveStorage
+});
+
+// 单文件上传
+router.post('/save', save.single('upload_file'), function(req, res, next) {
+	var file = req.file;
+	console.log(file)
+	res.send({
+		ret_code: '0'
+	});
 });
 
 // router.use('/program', express.static(path.join(__dirname, 'temp')));

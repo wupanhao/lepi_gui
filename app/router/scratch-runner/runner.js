@@ -32,7 +32,13 @@ class Runner {
     vm.attachStorage(storage);
 
     vm.on('workspaceUpdate', function() {
-      setTimeout(function() {}, 100);
+      swal("加载完成", {
+        // icon: "success",
+        button: false,
+      });
+      setTimeout(function() {
+        swal.close()
+      }, 500);
       // vm.greenFlag();
     })
 
@@ -102,7 +108,7 @@ class Runner {
         }
         this.vm.stopAll()
         this.running = false
-      } else if (e.keyCode == 82) {
+      } else if (e.keyCode == 82) { // R Run
         this.vm.greenFlag()
         this.running = true
       }
@@ -141,6 +147,9 @@ class Runner {
     vm.start()
   }
   loadProjectFromFile(path) {
+    swal("程序加载中", {
+      button: false,
+    });
     var buffer = fs.readFileSync(path);
     console.log(buffer)
     this.vm.loadProject(buffer)
@@ -158,6 +167,9 @@ class Runner {
 
   }
   loadProjectFromUrl(url) {
+    swal("程序加载中", {
+      button: false,
+    });
     JSZipUtils.getBinaryContent(url, (err, data) => {
       console.log(data)
       this.vm.loadProject(data)
@@ -213,11 +225,13 @@ ipcRenderer.on('loadUrl', (event, arg) => {
 const rotate90 = true
 
 const rotateMap = {
+  // 上下左右 横屏重映射，
   37: 38,
   38: 39,
   39: 40,
   40: 37,
-  13: 32
+  13: 32, //回车=> 空格
+  72: 84 //H => T
 }
 
 ipcRenderer.on('key-event', (event, message) => {
