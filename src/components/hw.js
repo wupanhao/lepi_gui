@@ -9,6 +9,11 @@ import $ from 'jquery';
 class HW extends Component {
     constructor(props) {
         super(props)
+        this.sensorType = {
+            0: '未连接',
+            29: '红外传感器',
+            30: '超声波传感器'
+        }
         this.state = {
             value: 0,
             fz: 0,
@@ -123,17 +128,17 @@ class HW extends Component {
                 <div className="s-body">
 
                     <div className="p-center">
-                        <div className="p-text">{`${this.state.data.id === 29 ? '光值：'+this.state.data.value : '未连接'}`}</div>
+                        <div className="p-text">{`${this.state.data.id === 29 ? '光值：'+this.state.data.value : this.sensorType[this.state.data.id]?this.sensorType[this.state.data.id]:'未连接'}`}</div>
                     </div>
                     <div className="p-bottom">
                     </div>
                     <div className="">
                         <div className="p-text">
-                            <span class={`p-text-span ${this.state.i === 0 ? 's-active' : ''}`}>P1</span>
-                            <span class={`p-text-span ${this.state.i === 1 ? 's-active' : ''}`}>P2</span>
-                            <span class={`p-text-span ${this.state.i === 2 ? 's-active' : ''}`}>P3</span>
-                            <span class={`p-text-span ${this.state.i === 3 ? 's-active' : ''}`}>P4</span>
-                            <span class={`p-text-span ${this.state.i === 4 ? 's-active' : ''}`}>P5</span>
+                            <span class={`p-text-span ${this.state.i === 0 ? 's-active' : ''}`}>S1</span>
+                            <span class={`p-text-span ${this.state.i === 1 ? 's-active' : ''}`}>S2</span>
+                            <span class={`p-text-span ${this.state.i === 2 ? 's-active' : ''}`}>S3</span>
+                            <span class={`p-text-span ${this.state.i === 3 ? 's-active' : ''}`}>S4</span>
+                            <span class={`p-text-span ${this.state.i === 4 ? 's-active' : ''}`}>S5</span>
                         </div>
                     </div>
                 </div>

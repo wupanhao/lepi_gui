@@ -9,6 +9,11 @@ import $ from 'jquery';
 class CSB extends Component {
     constructor(props) {
         super(props)
+        this.sensorType = {
+            0: '未连接',
+            29: '红外传感器',
+            30: '超声波传感器'
+        }
         this.state = {
             value: 0,
             i: -1,
@@ -124,7 +129,7 @@ class CSB extends Component {
                     <div className="p-bottom">{( ()=>{
 
                         if (this.state.data.value<2000) {
-                            return <div> {`${this.state.data.id === 30 ? '距离障碍物：'+this.state.data.value/10.0+' CM' : '未连接'}`} </div>
+                            return <div> {`${this.state.data.id === 30 ? '距离障碍物：'+this.state.data.value/10.0+' CM' : this.sensorType[this.state.data.id]?this.sensorType[this.state.data.id]:'未连接'}`} </div>
                         } else {
                             return <div> 超出量程 </div>
                         }
