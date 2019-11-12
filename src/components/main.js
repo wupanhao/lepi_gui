@@ -55,11 +55,22 @@ class Main extends Component {
         if (ros && ros.isConnected()) {
             console.log('main ros connected')
             document.addEventListener("keydown", this.onMainKeyDown)
-            T.confirm({
-                // title: '标题',
-                message: '加载完毕，可以开始你的创作了',
+            axios.get(env.api_base_url + '/system/camera_connected').then(result => {
+                console.log(result)
+                if (result && result.data && result.data.connected) {
+                    T.confirm({
+                        // title: '标题',
+                        message: '加载完毕，可以开始你的创作了',
+                    })
+                    setTimeout(() => T.clear(), 2000)
+                } else {
+                    T.confirm({
+                        // title: '标题',
+                        message: '摄像头模块未连接，视觉功能暂时无法使用',
+                    })
+                    setTimeout(() => T.clear(), 2500)
+                }
             })
-            setTimeout(() => T.clear(), 1500)
         } else {
             setTimeout(this.waiteForRos, 1000)
         }
@@ -127,6 +138,9 @@ class Main extends Component {
                     break;
                 case 82:
                     axios.get(env.api_base_url + '/show_scratch_window')
+                case 0x99:
+                    axios.get(env.api_base_url + '/system/halt')
+                    T.loading('正在关机')
             }
         }
     }

@@ -23,6 +23,14 @@ ipcRenderer.on('key-event', (event, message) => {
 			console.log(value)
 		})
 		*/
+	} else if (message.value == 0x99) {} {
+		var e = new KeyboardEvent('keydown', {
+			bubbles: true,
+			cancelable: true,
+			// key: message.value,
+			keyCode: message.value,
+		})
+		document.dispatchEvent(e);
 	}
 	// document.dispatchEvent(e);
 
