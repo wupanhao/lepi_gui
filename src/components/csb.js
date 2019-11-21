@@ -122,21 +122,46 @@ class CSB extends Component {
             <div>
                 <Header />
                 <div className="s-body">
-
-                    <div className="p-center">
-                        <div className="p-line" style={{width:this.state.data.value < 400 ? this.state.data.value*0.5:200 + 'px'}}></div>
-                    </div>
-                    <div className="p-bottom">{( ()=>{
-
-                        if (this.state.data.value<2000) {
-                            return <div> {`${this.state.data.id === 30 ? '距离障碍物：'+this.state.data.value/10.0+' CM' : this.sensorType[this.state.data.id]?this.sensorType[this.state.data.id]:'未连接'}`} </div>
-                        } else {
-                            return <div> 超出量程 </div>
+                    {( ()=>{
+                        if (this.state.data.id!=0) {
+                            var value = this.state.data.value
+                            var id = this.state.data.id
+                            if( id === 30) {
+                                return (
+                            <React.Fragment>
+                                <div className="p-center">
+                                    <div className="p-line" style={{width:value < 400 ? value*0.5:200 + 'px'}}></div> 
+                                </div>
+                                <div className="p-bottom">
+                                    <div>距离障碍物：{ value/10.0 + ' ' } CM </div>
+                                </div>
+                            </React.Fragment>
+                            )}
+                            else if (id === 29){
+                                return(
+                                <React.Fragment>
+                                    <div className="p-center">
+                                        <div className="p-text">{ '光值：'}{value}</div>
+                                    </div> <div className = "p-bottom" >
+                                    </div>
+                                </React.Fragment>
+                                    )
+                            }else {
+                                return (
+                                <React.Fragment>
+                                    <div className="p-center">
+                                        <div className="p-line" /> 
+                                    </div>
+                                    <div className="p-bottom">
+                                        <div></div>
+                                    </div>
+                                </React.Fragment>
+                                )
+                            }
                         }
                     })()
                     }
 
-                    </div>
                     <div>
                         <div className="p-text">
                             <span className={`p-text-span ${this.state.i === 0 ? 's-active' : ''}`} value="{this.state.data.value}">S1</span>

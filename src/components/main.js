@@ -138,6 +138,7 @@ class Main extends Component {
                     break;
                 case 82:
                     axios.get(env.api_base_url + '/show_scratch_window')
+                    break;
                 case 0x99:
                     axios.get(env.api_base_url + '/system/halt')
                     T.loading('正在关机')

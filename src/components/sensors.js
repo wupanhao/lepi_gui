@@ -107,11 +107,11 @@ class TLY extends Component {
                         </Link>
                     </div>
                     <div className={`s-img-l ${this.state.i === 2 ? 'active' : ''}`}>
-                        <Link to="/tly" name="sensors-a"><img src={tly} alt=""/><div>陀螺仪</div></Link>
+                        <Link to="/tly" name="sensors-a"><img src={tly} alt=""/><div>九轴</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.i === 3 ? 'active' : ''}`}>
                         <Link to="/csb" name="sensors-a"><img src={csb} alt=""/>
-                            <div>超声波</div>
+                            <div>自动识别</div>
                         </Link>
                     </div>
                     <div className={`s-img-l ${this.state.i === 4 ? 'active' : ''}`}>
