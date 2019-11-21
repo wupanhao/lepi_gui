@@ -97,7 +97,7 @@ export default increaseAction
 ```
 
 ```
-// hello.js
+// keyboard.js
 const sayHelloAction = {
     type: 'sayHello'
 }

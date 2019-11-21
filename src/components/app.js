@@ -26,7 +26,8 @@ import CZCP from './czcp';
 import BBXX from './bbxx';
 import CXGL from './cxgl';
 import PROJECTLIST from './projectList';
-
+import WifiPwd from './wifi_pwd';
+import WIFI from './wifi';
 import {
     HashRouter,
     Route,
@@ -127,6 +128,8 @@ class App extends Component {
                         <Route exact path="/bbxx" component={BBXX}/>
                         <Route exact path="/cxgl" component={CXGL}/>
                         <Route exact path="/projectList" component={PROJECTLIST}/>
+                        <Route exact path="/wifi" component={WIFI} />
+                        <Route exact path="/wifi/:name" component={WifiPwd}/>
                     </Switch>
                 </HashRouter>
             </div>

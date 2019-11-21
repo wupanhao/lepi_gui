@@ -3,7 +3,7 @@ import {Component} from 'react';
 import Header from './header';
 import bt1 from '../public/images/bt1.png';
 import bt2 from '../public/images/bt2.png';
-import history from '../public/js/history';
+import {history} from '../public/js/history';
 import $ from  'jquery';
 import wifi from '../public/images/wifi.png'
 import {
@@ -47,10 +47,13 @@ class LY extends Component {
         if (e && e.keyCode) {
             switch (e.keyCode) {
                 case 13://回车事件
+                    console.log('isOpen : ', _this.state.isOpen);
+                    console.log('i : ', _this.state.i);
                     if (_this.state.isOpen) {
                         const links = $('a[name="li-a"]');
                         if (links.length > 0 && i != -1 && i != 0) {
-                            links[this.state.i] ? links[this.state.i].click() : null;
+                            console.log('click : ', links[_this.state.i]);
+                            links[_this.state.i] ? links[_this.state.i].click() : null;
                         }
                     }
                     if (i == 0) {
@@ -114,16 +117,16 @@ class LY extends Component {
                                     <img src={wifi} alt=""/><Link name="li-a" to="/wifi/111111">111111</Link>
                                 </li>
                                 <li name="wifi" className={`wifi-down-li ${this.state.i === 2 ? 'li-active' : ''}`}>
-                                    <img src={wifi} alt=""/><a name="li-a" to="/wifi/222222">222222</a>
+                                    <img src={wifi} alt=""/><Link name="li-a" to="/wifi/222222">222222</Link>
                                 </li>
                                 <li name="wifi" className={`wifi-down-li ${this.state.i === 3 ? 'li-active' : ''}`}>
-                                    <img src={wifi} alt=""/><a name="li-a" to="/wifi/333333">333333</a>
+                                    <img src={wifi} alt=""/><Link name="li-a" to="/wifi/333333">333333</Link>
                                 </li>
                                 <li name="wifi" className={`wifi-down-li ${this.state.i === 4 ? 'li-active' : ''}`}>
-                                    <img src={wifi} alt=""/><a name="li-a" to="/wifi/444444">444444</a>
+                                    <img src={wifi} alt=""/><Link name="li-a" to="/wifi/444444">444444</Link>
                                 </li>
                                 <li name="wifi" className={`wifi-down-li ${this.state.i === 5 ? 'li-active' : ''}`}>
-                                    <img src={wifi} alt=""/><a name="li-a" to="/wifi/555555">555555</a>
+                                    <img src={wifi} alt=""/><Link name="li-a" to="/wifi/555555">555555</Link>
                                 </li>
                             </div>
 
