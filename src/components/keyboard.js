@@ -4,7 +4,7 @@ import Header from './header';
 import Footer from './foot';
 import $ from 'jquery';
 
-class WIFIPWD extends Component {
+class KEYBOARD extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -38,8 +38,7 @@ class WIFIPWD extends Component {
             m: 'XYZ',
             n: '123',
             j: -1,
-            str: '',
-            isOpen: false
+            str: ''
         }
         this.listenPwdDiv = this.listenPwdDiv.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -68,9 +67,6 @@ class WIFIPWD extends Component {
                 case 13: //回车事件
                     if (divs.length > 0 && j != -1) {
                         divs[_this.state.j] ? divs[_this.state.j].click() : null;
-                    }
-                    if(_this.state.str == ''){
-                        _this.setState({isOpen: true});
                     }
                     /*if (i  == -1) {
                      _this.setState({
@@ -130,27 +126,26 @@ class WIFIPWD extends Component {
     getValue(val){
         const str = this.state.str;
         this.setState({str: str + val});
+        const {setValue, strV} = this.props;
+        console.log('setValue : ', setValue, strV);
+        setValue(this.state.str);
     }
     delValue(){
         const str = this.state.str;
         const s = str.substring(0,str.length-1);
         this.setState({str: s});
+        const {setValue} = this.props;
+        setValue(this.state.str);
     }
     getEnter(){
-        const v = $('#str').val();
-        console.log('v === ', v);
-        this.setState({isOpen: false});
+        console.log('v === ', this.state.str);
+        const {setValue} = this.props;
+        setValue(this.state.str);
     }
     render() {
-        const name = this.props.match.params.name ? this.props.match.params.name: ''
-        return (
-            <div>
-                <Header />
-                <div className="s-body">
-                    <div className="pwd_label"><p>{name}的密码</p></div>
-                    <div className="input">
-                        <input type="text" placeholder="密码" value={this.state.str} id="str" className="pwd_input"/>
-                        <div className="pwd_keyboard" style={{display: this.state.isOpen ? 'block' : 'none'}}>
+        const {isOpen} = this.props;
+        return (<div className="pwd_keyboard" style={{display: isOpen ? 'block' : 'none'}}>
+                <input type="hidden" value={this.state.str} id="keyboard"/>
                             <div onClick={() => this.getValue(this.state.key1[this.state.i])} className={`pk_div ${this.state.j == 0 ? 'pk_active' : ''}`}>{this.state.key1[this.state.i]}</div>
                             <div onClick={() => this.getValue(this.state.key2[this.state.i])} className={`pk_div ${this.state.j == 1 ? 'pk_active' : ''}`}>{this.state.key2[this.state.i]}</div>
                             <div onClick={() => this.getValue(this.state.key3[this.state.i])} className={`pk_div ${this.state.j == 2 ? 'pk_active' : ''}`}>{this.state.key3[this.state.i]}</div>
@@ -182,14 +177,11 @@ class WIFIPWD extends Component {
                             <div onClick={() => this.delValue()} className={`pk_div ${this.state.j == 28 ? 'pk_active' : ''}`}>del</div>
                             <div onClick={() => this.getEnter()} className={`pk_div ${this.state.j == 29 ? 'pk_active' : ''}`}>确定</div>
                             </div>
-                    </div>
-                </div>
-               <Footer/>
-            </div>
+
         )
     }
 }
 
-export default WIFIPWD
+export default KEYBOARD
 
 

@@ -8,6 +8,7 @@ import sy from '../public/images/yl2.png';
 import zt from '../public/images/zt.png';
 import czcp from '../public/images/czcp.png';
 import bbxx from '../public/images/bbxx.png';
+import wifi from '../public/images/wifi2.png';
 import Header from './header';
 import Footer from './foot';
 import {
@@ -168,13 +169,13 @@ class Setting extends Component {
                         <Link to="/ly" name="set-a"><img src={ly1} alt=""/><div>蓝牙</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 1 ? 'active' : ''}`}>
-                        <Link to="/yy" name="set-a"><img src={yy} alt=""/><div>语言</div></Link>
+                        <Link to="/wifi" name="set-a"><img src={wifi} alt=""/><div>wifi</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 2 ? 'active' : ''}`}>
-                        <Link to="/yl" name="set-a"><img src={sy} alt=""/><div>声音</div></Link>
+                        <Link to="/yy" name="set-a"><img src={yy} alt=""/><div>语言</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 3 ? 'active' : ''}`}>
-                        <Link name="set-a"><img src={zt} alt=""/><div>主题</div></Link>
+                        <Link to="/yl" name="set-a"><img src={sy} alt=""/><div>声音</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 4 ? 'active' : ''}`}>
                         {/* <Link to="/czcp" name="set-a"><img src={czcp} alt=""/><div>重置磁盘</div></Link>*/}

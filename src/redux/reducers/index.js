@@ -1,8 +1,11 @@
-import { combineReducers } from 'redux'
-import counter from './counter'
+export default {
 
-const reducers = combineReducers({
-    counter
-})
-
-export default reducers
+    keyValue(state = '', action) {
+        switch (action.type) {
+            case 'KEYBOARD':
+                return action.str;
+            default:
+                return state;
+        }
+    }
+}

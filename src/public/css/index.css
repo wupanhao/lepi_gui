@@ -2,9 +2,9 @@
   font-family: ziti;
   src:url('../font/SIMYOU.TTF');
 }
-#root,img,div,a {
-  cursor: none;
-}
+/*#root,img,div,a {
+   cursor: none;
+ }*/
 #root {
   margin: 0px;
   padding: 0px;
@@ -700,4 +700,44 @@ html body a:link{
 }
 .modal-content-wrap {
   padding: 10px 15px;
+}
+.pwd_label {
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  margin-top: 0px;
+}
+.input{
+  height: 22px;
+  width: 100%;
+}
+.pwd_input {
+  width: 80%;
+  margin-left: 10%;
+  background: linear-gradient(left,#b7ccf9,#78a8f7);
+  border-radius: 5px;
+  height: 20px;
+  text-align: center;
+  border: 0px;
+  margin-bottom: 2px;
+}
+.pwd_keyboard{
+  width: 80%;
+  margin-left: 10%;
+  height: 150px;
+  border-radius: 5px;
+}
+.pk_div {
+  float: left;
+  width: 36px;
+  margin: 1px;
+  background: linear-gradient(left,#b7ccf9,#78a8f7);
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+  border-radius: 2px;
+  font-size: 12px;
+}
+.pk_active {
+  background: #103ade;
 }
