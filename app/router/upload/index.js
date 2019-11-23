@@ -14,15 +14,21 @@ const wifi = new Wifi();
 const router = express.Router();
 const platform = os.platform()
 
-var temp_dir = path.join(__dirname, 'temp')
+var temp_dir = path.join(__dirname, '../../temp')
 const save_dir = require('../scratch-runner/index').getProgramDir()
-if (platform === 'linux') {
-	temp_dir = os.tmpdir()
+
+function mkdirIfNotExists(target_dir) {
+	if (!fs.existsSync(target_dir)) {
+		fs.mkdirSync(target_dir);
+	}
 }
 
-if (!fs.existsSync(temp_dir)) {
-	fs.mkdirSync(temp_dir);
-}
+mkdirIfNotExists(path.join(save_dir, ''))
+mkdirIfNotExists(path.join(save_dir, 'Scratch'))
+mkdirIfNotExists(path.join(save_dir, 'Python'))
+mkdirIfNotExists(path.join(save_dir, 'Shell'))
+mkdirIfNotExists(path.join(save_dir, 'Music'))
+mkdirIfNotExists(temp_dir)
 
 // watchFile(temp_dir)
 
@@ -56,7 +62,17 @@ router.post('/debug', temp.single('upload_file'), function(req, res, next) {
 
 const saveStorage = multer.diskStorage({
 	destination: function(req, file, cb) {
-		cb(null, save_dir)
+		if (path.extname(file.originalname) == '.sb3') {
+			cb(null, save_dir + '/Scratch')
+		} else if (path.extname(file.originalname) == '.py') {
+			cb(null, save_dir + '/Python')
+		} else if (path.extname(file.originalname) == '.sh') {
+			cb(null, save_dir + '/Shell')
+		} else if (path.extname(file.originalname) == '.mp3') {
+			cb(null, save_dir + '/Music')
+		} else {
+			cb(null, temp_dir)
+		}
 	},
 	filename: function(req, file, cb) {
 		// console.log(file)

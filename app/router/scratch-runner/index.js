@@ -7,18 +7,15 @@ const fs = require('fs');
 const os = require('os')
 const path = require('path')
 const platform = os.platform()
-var save_dir = path.join(__dirname, '../../temp')
+const {
+  killProcess,
+  executeTerminal
+} = require('../shell-executor')
+
+var save_dir = path.join(os.homedir(), 'Programs')
 var active = true
 
 var scratchWindow = null
-
-if (platform === 'linux') {
-  save_dir = '/home/pi/Programs'
-}
-
-if (!fs.existsSync(save_dir)) {
-  fs.mkdirSync(save_dir);
-}
 
 function getProgramDir() {
   return save_dir
@@ -79,15 +76,20 @@ function closeScratchWindow() {
 }
 
 function runScratch(file_path) {
-  if (scratchWindow != null) {
-    scratchWindow.show()
-    scratchWindow.webContents.send('loadFile', {
-      path: file_path
-    });
+  if (path.extname(file_path) == '.sb3') {
+    if (scratchWindow != null) {
+      scratchWindow.show()
+      scratchWindow.webContents.send('loadFile', {
+        path: file_path
+      });
+    } else {
+      createScratchWindow(file_path)
+    }
+    return scratchWindow
   } else {
-    createScratchWindow(file_path)
+    executeTerminal(file_path)
   }
-  return scratchWindow
+  console.log("file type %s to be handled", path.extname(file_path))
 }
 
 function sendKeyMessage(message) {
