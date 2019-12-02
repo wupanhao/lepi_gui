@@ -27,7 +27,8 @@ function checkCameraConnection() {
 }
 
 function startPiDriver() {
-	ChildProcess.exec(`docker restart demo_duck && docker exec -t  demo_duck bash -c "source /demo_duck/env.sh && roslaunch pi_driver pi_driver_node.launch"  > /tmp/duckie.log &`)
+	// ChildProcess.exec(`docker restart demo_duck && docker exec -t  demo_duck bash -c "source /demo_duck/env.sh && roslaunch pi_driver pi_driver_node.launch"  > /tmp/duckie.log &`)
+	ChildProcess.exec(`docker restart demo_duck && docker exec -t  demo_duck bash -c "source /demo_duck/env.sh && roslaunch duckietown_demos duck_service2.launch"  > /tmp/duckie.log &`)
 }
 
 function startDuckService() {

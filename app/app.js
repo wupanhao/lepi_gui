@@ -44,8 +44,11 @@ function onBtnEvent(message) {
     console.log('mainWindow == null')
     return
   }
-
+  if (message.value == 66 && message.type == 4) {
+    mainWindow.focus()
+  }
   if (mainWindow.focused) {
+
     mainWindow.webContents.send('key-event', message);
     /*
     if (message.value == 82 && scratchWindow != null) { // R Run
