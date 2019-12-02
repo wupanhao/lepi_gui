@@ -2,9 +2,9 @@
   font-family: ziti;
   src:url('../font/SIMYOU.TTF');
 }
-/*#root,img,div,a {
+#root,img,div,a {
    cursor: none;
- }*/
+ }
 #root {
   margin: 0px;
   padding: 0px;

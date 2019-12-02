@@ -252,7 +252,7 @@ ipcRenderer.on('key-event', (event, message) => {
     document.dispatchEvent(keypress);
      */
   }
-  if (message.type == 3) {
+  if (message.type == 3 || message.type == 2) {
     var keyup = new KeyboardEvent('keyup', {
       bubbles: true,
       cancelable: true,

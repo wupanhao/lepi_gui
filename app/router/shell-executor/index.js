@@ -1,1 +1,1 @@
-module.exports = require('./exector')
+module.exports = require('./executor')
