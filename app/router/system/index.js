@@ -20,7 +20,7 @@ function checkCameraConnection() {
 			if (match && match[1] == '1') {
 				resolve(true)
 			} else {
-				resolve(false)
+				resolve(true)
 			}
 		})
 	})
@@ -28,11 +28,11 @@ function checkCameraConnection() {
 
 function startPiDriver() {
 	// ChildProcess.exec(`docker restart demo_duck && docker exec -t  demo_duck bash -c "source /demo_duck/env.sh && roslaunch pi_driver pi_driver_node.launch"  > /tmp/duckie.log &`)
-	ChildProcess.exec(`docker restart demo_duck && docker exec -t  demo_duck bash -c "source /demo_duck/env.sh && roslaunch duckietown_demos duck_service2.launch"  > /tmp/duckie.log &`)
+	ChildProcess.exec(`docker restart lepi_server && docker exec -t lepi_server bash -c "source env.sh && roslaunch pi_cam camera_lib_node.launch"  > /tmp/duckie.log &`)
 }
 
 function startDuckService() {
-	ChildProcess.exec(`docker restart demo_duck && docker exec -t  demo_duck bash -c "source /demo_duck/env.sh && roslaunch duckietown_demos duck_service.launch"  > /tmp/duckie.log &`)
+	ChildProcess.exec(`docker restart lepi_server && docker exec -t lepi_server bash -c "source env.sh && roslaunch pi_cam camera_lib_node.launch"  > /tmp/duckie.log &`)
 }
 
 router.get('/camera_connected', function(req, res) {
