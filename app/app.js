@@ -12,7 +12,8 @@ const mdns = require('./router/mdns')
 const {
   checkCameraConnection,
   startPiDriver,
-  startDuckService
+  startDuckService,
+  resetAll
 } = require('./router/system')
 const env = require('../env')
 
@@ -44,6 +45,11 @@ function onBtnEvent(message) {
     console.log('mainWindow == null')
     return
   }
+  // # Exit 'E' 69
+  if (message.value == 69) {
+    resetAll()
+  }
+
   if (message.value == 66 && message.type == 4) {
     mainWindow.focus()
   }

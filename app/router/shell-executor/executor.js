@@ -12,7 +12,8 @@ function killByPid(pid) {
 		child_process.spawnSync("taskkill", ["/PID", pid, "/T", "/F"])
 	} else {
 		// process.kill(-pid, 'SIGTERM')
-		child_process.spawnSync("killall", ["x-terminal-emulator"])
+		// child_process.spawnSync("killall", ["x-terminal-emulator"])
+		child_process.spawnSync("killall", ["lxterminal"])
 	}
 }
 
@@ -85,8 +86,8 @@ function executeTerminal(file) {
 		}
 	}
 	var extname = path.extname(file)
-	// var cmd = 'lxterminal'
-	var cmd = 'x-terminal-emulator'
+	var cmd = 'lxterminal'
+	// var cmd = 'x-terminal-emulator'
 	if (extname == '.py') {
 		param = `-e 'python ${file}'`
 	} else if (extname == '.sh') {
