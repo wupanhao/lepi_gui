@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root (use sudo)" 1>&2
    exit 1
@@ -20,6 +20,7 @@ marker="0.0.0"
 
 apt update
 #apt-get -y install raspberrypi-kernel-headers raspberrypi-kernel 
+apt install -y dkms
 #apt-get -y install  dkms git i2c-tools libasound2-plugins
 
 # locate currently installed kernels (may be different to running kernel if

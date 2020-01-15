@@ -57,7 +57,7 @@ class BBXX extends Component {
                 <div className="s-body">
                     <div className="s-czcp">
                         <ul>
-                            <li><div className="s-label">型号：</div>乐派-1</li>
+                            <li><div className="s-label">型号：</div>乐派AI-8</li>
                             <li><div className="s-label">版本：</div>0019</li>
                             <li><div className="s-label">出厂时间：</div>2020-01</li>
                             {  //console.log(this.state) 
