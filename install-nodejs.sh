@@ -1,21 +1,29 @@
-set -x
-sudo apt update
-
 function install_from_apt(){
+	sudo apt update
 	sudo apt install npm -y
 	# Fix npm EACCES error
 	mkdir ~/.npm-global
 	npm config set prefix '~/.npm-global'
 	npm i -g npm
+	echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
+	source ~/.profile
 	#/usr/local/bin/npm config set prefix '~/.npm-global'
 }
 
 function install_from_wget(){
+	cd ~/workspace
+	wget https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz
+	tar -xvf node-v12.14.1-linux-armv7l.tar.xz
+
+	echo 'export PATH=~/workspace/node-v12.14.1-linux-armv7l/bin:$PATH' >> ~/.profile
+	echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
+	source ~/.profile
+
+	mkdir ~/.npm-global
+	npm config set prefix '~/.npm-global'
 
 }
-install_from_apt
-echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
-~/.npm-global/bin/npm i -g electron@6.0.0
-~/.npm-global/bin/npm i -g yarn
-~/.npm-global/bin/yarn install
-cd app && ~/.npm-global/bin/npm i
+# install_from_apt
+install_from_wget
+npm i -g electron@6.0.0
+npm i -g yarn

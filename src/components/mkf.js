@@ -6,7 +6,7 @@ import Header from './header';
 import Footer from './foot';
 import mkf1 from '../public/images/mkf1.png';
 import mkf2 from '../public/images/mkf2.png';
-import moment from 'moment';
+//import moment from 'moment';
 class MKF extends Component {
     constructor(props) {
         super(props)

@@ -10,3 +10,4 @@ sudo bash -c "echo 'dtoverlay=tft9341-lcd:rotate=0' >> /boot/config.txt"
 
 # print logs when boot
 sudo cp ./conf/cmdline.txt /boot/
+sudo cp ./conf/config.txt /boot/

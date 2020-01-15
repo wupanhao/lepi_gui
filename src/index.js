@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+	BrowserRouter as Router
+} from 'react-router-dom';
+import App from './components/app'
+import './public/css/index.css';
+
+ReactDOM.render(
+	<Router>
+        <App/>
+    </Router>, document.getElementById('root'));
+
+/*
 import {createStore, combineReducers} from 'redux'
 import {Provider} from 'react-redux'
-import App from './views/app'
 import reducers from './redux/reducers/index'
-import './public/css/index.css';
 import './public/images/test.png';
-import {BrowserRouter as Router} from 'react-router-dom';
 import registerServiceWorker from './utils/registerServiceWorker';
 
 export let store = {};
@@ -22,4 +31,4 @@ ReactDOM.render(
     </Provider>, document.getElementById('root'));
 registerServiceWorker();
 
-
+*/
