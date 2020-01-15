@@ -114,7 +114,7 @@ class Test extends Component {
                     </div>
                     <div className={`s-img-l ${this.state.t === 3 ? 'active' : ''}`}>
                         <Link to="/md" name="test-a"><img src={md} alt=""/>
-                            <div>马达</div>
+                            <div>电机</div>
                         </Link>
                     </div>
                     <div className={`s-img-l ${this.state.t === 4 ? 'active' : ''}`}>

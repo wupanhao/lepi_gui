@@ -169,7 +169,7 @@ class Setting extends Component {
                         <Link to="/ly" name="set-a"><img src={ly1} alt=""/><div>蓝牙</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 1 ? 'active' : ''}`}>
-                        <Link to="/wifi" name="set-a"><img src={wifi} alt=""/><div>wifi</div></Link>
+                        <Link to="" name="set-a"><img src={wifi} alt=""/><div>wifi</div></Link>
                     </div>
                     <div className={`s-img-l ${this.state.s === 2 ? 'active' : ''}`}>
                         <Link to="/yy" name="set-a"><img src={yy} alt=""/><div>语言</div></Link>

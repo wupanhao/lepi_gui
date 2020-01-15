@@ -51,7 +51,7 @@ class Header extends Component {
     render() {
         return (
             <div className="s-header">
-                <span>乐派一号</span>
+                <span>乐派AI</span>
                 <div
                     style={{height: '13px', width: '45px', border:'1px solid #FFF', float: 'right', borderRadius: '7px', marginTop: '0px', marginRight: '10px'}}>
                     <div style={{float:'left', height:'100%', width: `${this.state.i}%`,borderRadius: '7px', background: `${this.state.i <= 10 ? 'red' : this.state.i <= 20 ? '#e4b827' : '#37c337'}`, textAlign:'center', color: '#fff', fontSize: '10px'}} >{this.state.i}%</div>

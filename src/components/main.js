@@ -39,7 +39,7 @@ class Main extends Component {
         if (ros && ros.isConnected()) {
             document.addEventListener("keydown", this.onMainKeyDown)
         } else {
-            T.loading('后台服务启动中')
+            T.loading('服务启动中,请稍等')
             this.waiteForRos()
         }
 
@@ -57,22 +57,14 @@ class Main extends Component {
             document.addEventListener("keydown", this.onMainKeyDown)
             axios.get(env.api_base_url + '/system/camera_connected').then(result => {
                 console.log(result)
-                if (result && result.data && result.data.connected) {
-                    T.confirm({
-                        // title: '标题',
-                        message: '加载完毕，可以开始你的创作了',
-                    })
-                    setTimeout(() => T.clear(), 2000)
-                } else {
-                    T.confirm({
-                        // title: '标题',
-                        message: '摄像头模块未连接，视觉功能暂时无法使用',
-                    })
-                    setTimeout(() => T.clear(), 2500)
-                }
+                T.confirm({
+                    // title: '标题',
+                    message: '加载完毕，可以开始你的创作了',
+                })
+                setTimeout(() => T.clear(), 2000)
             })
         } else {
-            setTimeout(this.waiteForRos, 1000)
+            setTimeout(this.waiteForRos, 3000)
         }
     }
     onKeyDown(e) {
@@ -142,6 +134,7 @@ class Main extends Component {
                 case 0x99:
                     axios.get(env.api_base_url + '/system/halt')
                     T.loading('正在关机')
+                    break;
             }
         }
     }
@@ -153,7 +146,7 @@ class Main extends Component {
                 <div className="s-body" id="main">
                     <div className={`s-main-l ${this.state.i === 0 ? 'active' : ''}`} name="main">
                         <Link to="/projectList" name="main-a"><img src={cxgl} alt=""/>
-                            <div>程序管理</div>
+                            <div>文件管理</div>
                         </Link>
                     </div>
                     <div className={`s-main-l ${this.state.i === 1 ? 'active' : ''}`} name="main">

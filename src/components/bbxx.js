@@ -12,6 +12,7 @@ class BBXX extends Component {
         this.state = {
             ips: [],
         }
+        this.updateNetworks = this.updateNetworks.bind(this);
         // <li><div className="s-label">公司：</div> 京师智创（北京）科技有限公司</li>
     }
 
@@ -24,14 +25,21 @@ class BBXX extends Component {
                 })
             }
         })
+
+        if (this.update) {
+            setTimeout(this.updateNetworks, 1000)
+        }
+
     }
     componentWillMount() {}
     componentDidMount() {
+        this.update = true
         this.updateNetworks()
         document.addEventListener("keydown", this.onKeyDown)
     }
 
     componentWillUnmount() {
+        this.update = false
         document.removeEventListener("keydown", this.onKeyDown)
     }
 
@@ -49,9 +57,9 @@ class BBXX extends Component {
                 <div className="s-body">
                     <div className="s-czcp">
                         <ul>
-                            <li><div className="s-label">名称：</div>乐派1号</li>
-                            <li><div className="s-label">版本号：</div>0001</li>
-                            <li><div className="s-label">出厂时间：</div>2019-09-1</li>
+                            <li><div className="s-label">型号：</div>乐派-1</li>
+                            <li><div className="s-label">版本：</div>0019</li>
+                            <li><div className="s-label">出厂时间：</div>2020-01</li>
                             {  //console.log(this.state) 
                                 this.state.ips.map(dev => {
                                     return <li><div className="s-label">{dev.interface.substr(0,5)}：</div>{dev.ip} </li>
