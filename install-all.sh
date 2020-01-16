@@ -40,11 +40,13 @@ sudo docker run --rm -t -v /home/pi:/home/pi wupanhao/lepi_server:melodic bash -
 node -v
 if [ $? -ne 0 ]; then
   echo "nodejs not install, install now"
-  source install-nodejs.sh
+  cd cd ~/workspace/lepi_gui
+  bash install-nodejs.sh
 else
   echo "nodejs installed, ignore"
 fi
 # Install GUI
+source ~/nodejs.sh
 cd ~/workspace/lepi_gui
 yarn install
 yarn build
