@@ -68,3 +68,4 @@ gpu_mem=128
 dtoverlay=i2s-mmap
 dtoverlay=wm8960-soundcard
 dtoverlay=tft9341-lcd:rotate=0
+#dtoverlay=gpio-poweroff

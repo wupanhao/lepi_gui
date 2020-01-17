@@ -41,7 +41,7 @@ fi
 sudo docker pull wupanhao/lepi_server:melodic
 
 # Install ROS Runtime
-sudo apt install -y python-rospy python-rosnode python-roslaunch pulseaudio
+sudo apt install -y python-rospy python-rosnode python-roslaunch pulseaudio ros-core
 
 # Compile ROS Workspace
 sudo docker run --rm -t -v /home/pi:/home/pi wupanhao/lepi_server:melodic bash -c "source /ros_entrypoint.sh && cd catkin_ws/ && catkin_make_isolated"
